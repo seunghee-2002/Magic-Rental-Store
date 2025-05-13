@@ -1067,7 +1067,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e273cee9c6634140bddc521f4ec5fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: []
 --- !u!4 &1294122787
 Transform:
   m_ObjectHideFlags: 0
@@ -1164,6 +1163,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1360604294}
   - component: {fileID: 1360604293}
+  - component: {fileID: 1360604295}
+  - component: {fileID: 1360604299}
+  - component: {fileID: 1360604298}
+  - component: {fileID: 1360604297}
+  - component: {fileID: 1360604296}
+  - component: {fileID: 1360604300}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -1183,18 +1188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6bc89b264e32374fbdc5a51de714ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelParent: {fileID: 1673168122}
-  morningPanelPrefab: {fileID: 7137018267950063256, guid: 5ffa8ed40009eb841b03479626f08eca, type: 3}
-  dayPanelPrefab: {fileID: 238745171868646462, guid: aead7359eeabcd3448c4efcb1b377001, type: 3}
-  nightPanelPrefab: {fileID: 632665753497726536, guid: 03161877415c8f9448be0721ecfca4c9, type: 3}
-  blacksmithUnlockButton: {fileID: 0}
-  heroUnlockButton: {fileID: 0}
-  inventoryPanel: {fileID: 1984918471}
-  inventoryButtonPrefab: {fileID: 4346354833708648340, guid: 910fd0b5c335b2a40804661015516cc6, type: 3}
-  resultText: {fileID: 734486657}
-  goldText: {fileID: 620908394}
-  dayText: {fileID: 870441374}
-  nextPhaseButton: {fileID: 1035518883}
+  morningUI: {fileID: 0}
+  dayUI: {fileID: 0}
+  nightUI: {fileID: 0}
 --- !u!4 &1360604294
 Transform:
   m_ObjectHideFlags: 0
@@ -1210,6 +1206,143 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1360604295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360604292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c4637edad182446b1b462bc8ffa95b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelParent: {fileID: 1673168122}
+  canvas: {fileID: 1541850140}
+  morningPanelPrefab: {fileID: 0}
+  dayPanelPrefab: {fileID: 0}
+  nightPanelPrefab: {fileID: 0}
+  blacksmithMenuPanel: {fileID: 0}
+  blacksmithForgePanel: {fileID: 0}
+  blacksmithRecipePanel: {fileID: 0}
+  forgeButtonPrefab: {fileID: 0}
+  forgeButtonParent: {fileID: 0}
+  blacksmithForgeCancelButton: {fileID: 0}
+  blacksmithRecipeCancelButton: {fileID: 0}
+  blacksmithMenuButton: {fileID: 0}
+  blacksmithForgeButton: {fileID: 0}
+  blacksmithRecipeButton: {fileID: 0}
+  blacksmithUnlockButton: {fileID: 0}
+  blacksmithUnlockText: {fileID: 0}
+  heroMenuPanel: {fileID: 0}
+  heroCreationPanel: {fileID: 0}
+  heroRosterPanel: {fileID: 0}
+  heroRosterButtonPrefab: {fileID: 0}
+  itemSelectionPanel: {fileID: 0}
+  itemSelectionButtonPrefab: {fileID: 0}
+  customerButtonPrefab: {fileID: 0}
+  nameInput: {fileID: 0}
+  descInput: {fileID: 0}
+  costSlider: {fileID: 0}
+  elementDropdown: {fileID: 0}
+  iconPreview: {fileID: 0}
+  customerIcon: {fileID: 0}
+  selectIconButton: {fileID: 0}
+  heroCreationButton: {fileID: 0}
+  heroCreationCancelButton: {fileID: 0}
+  heroRosterCancelButton: {fileID: 0}
+  itemSelectionCancelButton: {fileID: 0}
+  heroMenuButton: {fileID: 0}
+  heroRosterPanelButton: {fileID: 0}
+  heroCreationPanelButton: {fileID: 0}
+  heroUnlockButton: {fileID: 0}
+  heroRosterParent: {fileID: 0}
+  itemSelectionParent: {fileID: 0}
+  customerListParent: {fileID: 0}
+  heroUnlockText: {fileID: 0}
+  costValueText: {fileID: 0}
+  customerNameText: {fileID: 0}
+  resultListParent: {fileID: 0}
+  resultEntryPrefab: {fileID: 0}
+  inventoryPanel: {fileID: 0}
+  inventoryButtonPrefab: {fileID: 0}
+  resultText: {fileID: 0}
+  goldText: {fileID: 0}
+  dayText: {fileID: 0}
+  nextPhaseButton: {fileID: 0}
+--- !u!114 &1360604296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360604292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c22d0db64fb61d4db180a6f0c7e5fa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1360604297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360604292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a4c0a7b22cb104f9079b4e99a52ac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nightPanel: {fileID: 0}
+--- !u!114 &1360604298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360604292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da41b150878e3884daed991e7af57e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  morningPanel: {fileID: 0}
+  blacksmithUnlockButton: {fileID: 0}
+--- !u!114 &1360604299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360604292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9849a253fc7c28944923d0c7f3288681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dayPanel: {fileID: 0}
+  heroUnlockButton: {fileID: 0}
+  heroCreationPanel: {fileID: 0}
+--- !u!114 &1360604300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360604292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158445a08f2ee9d4690ee8a0d5123bb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryPanel: {fileID: 0}
+  inventoryButtonPrefab: {fileID: 0}
+  resultText: {fileID: 0}
+  goldText: {fileID: 0}
+  dayText: {fileID: 0}
+  nextPhaseButton: {fileID: 0}
 --- !u!1 &1446665305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1309,8 +1442,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1673168122}
   - {fileID: 1984918471}
+  - {fileID: 1673168122}
   - {fileID: 1029038271}
   - {fileID: 1035518886}
   - {fileID: 620908392}
@@ -1432,8 +1565,8 @@ GameObject:
   - component: {fileID: 1984918471}
   - component: {fileID: 1984918475}
   - component: {fileID: 1984918474}
-  - component: {fileID: 1984918473}
   - component: {fileID: 1984918472}
+  - component: {fileID: 1984918476}
   m_Layer: 5
   m_Name: Inventory Panel
   m_TagString: Untagged
@@ -1474,32 +1607,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 0
---- !u!114 &1984918473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984918470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!114 &1984918474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1538,6 +1645,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1984918470}
   m_CullTransparentMesh: 1
+--- !u!114 &1984918476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984918470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

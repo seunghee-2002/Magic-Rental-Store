@@ -76,7 +76,7 @@ public class HeroManager : MonoBehaviour
         };
 
         heroRoster.Add(newHero);
-        UIManager.Instance.DisplayResult($"용사 {name} (등급: {rolledGrade})를 제작했습니다!");
-        UIManager.Instance.UpdateHeroUI();
+        CommonUI.Instance.DisplayResult($"용사 {name} (등급: {rolledGrade})를 제작했습니다!");
+        UIManager.Instance.dayUI.UpdateHeroUI();
     }
 }

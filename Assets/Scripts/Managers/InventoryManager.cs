@@ -5,7 +5,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
-    public List<ItemInstance> inventory = new List<ItemInstance>();
+    private List<ItemInstance> inventory = new List<ItemInstance>();
 
     void Awake()
     {
@@ -18,7 +18,7 @@ public class InventoryManager : MonoBehaviour
         var existing = inventory.Find(i => i.data == data);
         if (existing != null) existing.quantity += amount;
         else inventory.Add(new ItemInstance(data, amount));
-        UIManager.Instance.UpdateInventoryUI();
+        CommonUI.Instance.UpdateInventoryUI();
     }
 
     public bool UseItem(ItemData data) // 아이템 사용 & 여부 확인
@@ -27,7 +27,7 @@ public class InventoryManager : MonoBehaviour
         if (instance != null && instance.quantity > 0)
         {
             instance.quantity--;
-            UIManager.Instance.UpdateInventoryUI();
+            CommonUI.Instance.UpdateInventoryUI();
             return true;
         }
         return false;

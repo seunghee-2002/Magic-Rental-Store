@@ -50,27 +50,27 @@ public class GameManager : MonoBehaviour
             InventoryManager.Instance.AddItem(item, Random.Range(1, 4));
 
         StartMorning(); // 아침 시작
-        UIManager.Instance.UpdateGold(gold);
-        UIManager.Instance.UpdatePhase(currentDay, currentPhase);
-        UIManager.Instance.UpdateInventoryUI();
+        CommonUI.Instance.UpdateGold(gold);
+        CommonUI.Instance.UpdatePhase(currentDay, currentPhase);
+        CommonUI.Instance.UpdateInventoryUI();
     }
 
     public bool SpendGold(int amount) // 골드 소비
     {
         if (gold < amount)
         {
-            UIManager.Instance.DisplayResult("골드가 부족합니다!");
+            CommonUI.Instance.DisplayResult("골드가 부족합니다!");
             return false;
         }
         gold -= amount;
-        UIManager.Instance.UpdateGold(gold);
+        CommonUI.Instance.UpdateGold(gold);
         return true;
     }
 
     public void AddGold(int amount) // 골드 획득
     {
         gold += amount;
-        UIManager.Instance.UpdateGold(gold);
+        CommonUI.Instance.UpdateGold(gold);
     }
 
     public void NextPhase()
@@ -86,11 +86,11 @@ public class GameManager : MonoBehaviour
                 {
                     if (!SpendGold(taxAmount))
                     {
-                        UIManager.Instance.DisplayResult($"<color=red>월세 미납! 게임 오버</color>");
+                        CommonUI.Instance.DisplayResult($"<color=red>월세 미납! 게임 오버</color>");
                         // TODO: 게임오버 처리 (리셋하거나 종료)
                         return;
                     }
-                    UIManager.Instance.DisplayResult($"<color=yellow>월세 {taxAmount}G 납부 완료</color>");
+                    CommonUI.Instance.DisplayResult($"<color=yellow>월세 {taxAmount}G 납부 완료</color>");
                 }
                 currentDay++;
                 StartMorning();
@@ -98,9 +98,8 @@ public class GameManager : MonoBehaviour
             }    
         }
 
-        UIManager.Instance.UpdateGold(gold);
-        UIManager.Instance.UpdatePhase(currentDay, currentPhase);
-        UIManager.Instance.UpdateInventoryUI();
+        CommonUI.Instance.UpdatePhase(currentDay, currentPhase);
+        CommonUI.Instance.UpdateInventoryUI();
     }
 
     void StartMorning() // 아침 시작
@@ -111,7 +110,7 @@ public class GameManager : MonoBehaviour
         assignedItems   = new Dictionary<Customer, ItemData>();
         dayResults      = new List<DayResult>();
 
-        UIManager.Instance.ShowMorningUI();
+        UIManager.Instance.morningUI.ShowMorningUI();
     }
 
     void StartDay() // 낮 시작
@@ -121,7 +120,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < customersPerDay; i++)
             todayCustomers.Add(GenerateCustomer());
 
-        UIManager.Instance.ShowDayUI(todayCustomers);
+        UIManager.Instance.dayUI.ShowDayUI(todayCustomers);
     }
 
     void StartNight() // 밤 시작
@@ -136,7 +135,7 @@ public class GameManager : MonoBehaviour
             DayResult result = SimulateRun(c, item);
             dayResults.Add(result);
         }
-        UIManager.Instance.ShowNightUI(dayResults);
+        UIManager.Instance.nightUI.ShowNightUI(dayResults);
     }
 
     Customer GenerateCustomer() // 고객 생성
@@ -199,11 +198,11 @@ public class GameManager : MonoBehaviour
         if (!SpendGold(heroUnlockGold)) return;
         isHeroSystemUnlocked = true;
 
-        UIManager.Instance.DisplayResult("용사 제작 시스템이 해금되었습니다!");
-        UIManager.Instance.heroUnlockButton.gameObject.SetActive(false);
+        CommonUI.Instance.DisplayResult("용사 제작 시스템이 해금되었습니다!");
+        UIManager.Instance.dayUI.heroUnlockButton.gameObject.SetActive(false);
 
         // 이제 “영웅” 메뉴 버튼도 활성화
-        UIManager.Instance.OnHeroSystemUnlocked();      
+        UIManager.Instance.dayUI.OnHeroSystemUnlocked();      
     }
 
     public void PurchaseBlacksmithSystemUnlock() // 대장장이 시스템 해금
@@ -212,11 +211,11 @@ public class GameManager : MonoBehaviour
         
         isBlacksmithUnlocked = true;
 
-        UIManager.Instance.DisplayResult("대장장이 시스템이 해금되었습니다!");
-        UIManager.Instance.blacksmithUnlockButton.gameObject.SetActive(false);
+        CommonUI.Instance.DisplayResult("대장장이 시스템이 해금되었습니다!");
+        UIManager.Instance.morningUI.blacksmithUnlockButton.gameObject.SetActive(false);
 
         // 이제 “대장장이” 메뉴 버튼도 활성화
-        UIManager.Instance.OnBlacksmithUnlocked();    
+        UIManager.Instance.morningUI.OnBlacksmithUnlocked();    
     }
 }
 
