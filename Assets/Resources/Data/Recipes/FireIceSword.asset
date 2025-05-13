@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd5732b15eb9f0b4f81f59e4f824877f, type: 3}
-  m_Name: Knight
+  m_Script: {fileID: 11500000, guid: 51af88ff58482dc4694cc77f9616c51f, type: 3}
+  m_Name: FireIceSword
   m_EditorClassIdentifier: 
-  customerName: "\uAE30\uC0AC"
-  description: "\uC138\uB2E4"
-  grade: 1
-  element: 2
+  resultItem: {fileID: 11400000, guid: 66c646d3685684e4598548d09bcfe7ed, type: 2}
+  description: "\uC0AC\uC2E4 \uBD88\uAC80 "
+  cost: 1000
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 0}
