@@ -947,6 +947,61 @@ RectTransform:
   m_AnchoredPosition: {x: 401, y: 97.199974}
   m_SizeDelta: {x: 178.56, y: 135}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1074472259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1074472261}
+  - component: {fileID: 1074472260}
+  m_Layer: 0
+  m_Name: Weapon Shop Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1074472260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074472259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa016a5eb32f56940a8bdfa7b7d2b401, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commonWeapons: []
+  uncommonWeapons: []
+  rareWeapons: []
+  epicWeapons: []
+  legendaryWeapons: []
+  commonProb: 0.6
+  uncommonProb: 0.2
+  rareProb: 0.1
+  epicProb: 0.07
+  legendaryProb: 0.03
+  currentStock: []
+--- !u!4 &1074472261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074472259}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1101950921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,7 +1166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 099dc53152115794b835ccb0cb70156d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testStartItems:
+  testStartWeapons:
   - {fileID: 11400000, guid: f25283fd6c3e6db4d98407f5e30c2a99, type: 2}
   - {fileID: 11400000, guid: 66c646d3685684e4598548d09bcfe7ed, type: 2}
   - {fileID: 11400000, guid: 7ccca7f308cd0da4a9384fd78996f0e2, type: 2}
@@ -1239,8 +1294,8 @@ MonoBehaviour:
   heroCreationPanel: {fileID: 0}
   heroRosterPanel: {fileID: 0}
   heroRosterButtonPrefab: {fileID: 0}
-  itemSelectionPanel: {fileID: 0}
-  itemSelectionButtonPrefab: {fileID: 0}
+  WeaponSelectionPanel: {fileID: 0}
+  WeaponSelectionButtonPrefab: {fileID: 0}
   customerButtonPrefab: {fileID: 0}
   nameInput: {fileID: 0}
   descInput: {fileID: 0}
@@ -1252,20 +1307,20 @@ MonoBehaviour:
   heroCreationButton: {fileID: 0}
   heroCreationCancelButton: {fileID: 0}
   heroRosterCancelButton: {fileID: 0}
-  itemSelectionCancelButton: {fileID: 0}
+  WeaponSelectionCancelButton: {fileID: 0}
   heroMenuButton: {fileID: 0}
   heroRosterPanelButton: {fileID: 0}
   heroCreationPanelButton: {fileID: 0}
   heroUnlockButton: {fileID: 0}
   heroRosterParent: {fileID: 0}
-  itemSelectionParent: {fileID: 0}
+  WeaponSelectionParent: {fileID: 0}
   customerListParent: {fileID: 0}
   heroUnlockText: {fileID: 0}
   costValueText: {fileID: 0}
   customerNameText: {fileID: 0}
   resultListParent: {fileID: 0}
   resultEntryPrefab: {fileID: 0}
-  inventoryPanel: {fileID: 0}
+  inventoryPanelParent: {fileID: 0}
   inventoryButtonPrefab: {fileID: 0}
   resultText: {fileID: 0}
   goldText: {fileID: 0}
@@ -1337,7 +1392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158445a08f2ee9d4690ee8a0d5123bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryPanel: {fileID: 0}
+  inventoryPanelParent: {fileID: 0}
   inventoryButtonPrefab: {fileID: 0}
   resultText: {fileID: 0}
   goldText: {fileID: 0}
@@ -1683,3 +1738,4 @@ SceneRoots:
   - {fileID: 1101950923}
   - {fileID: 1241929791}
   - {fileID: 1360604294}
+  - {fileID: 1074472261}

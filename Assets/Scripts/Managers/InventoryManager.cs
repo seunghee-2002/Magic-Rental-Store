@@ -5,7 +5,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
-    private List<ItemInstance> inventory = new List<ItemInstance>();
+    private List<WeaponInstance> weaponInventory = new List<WeaponInstance>();
 
     void Awake()
     {
@@ -13,17 +13,17 @@ public class InventoryManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void AddItem(ItemData data, int amount) // 아이템 추가
+    public void AddWeapon(WeaponData data, int amount) // 아이템 추가
     {
-        var existing = inventory.Find(i => i.data == data);
+        var existing = weaponInventory.Find(i => i.data == data);
         if (existing != null) existing.quantity += amount;
-        else inventory.Add(new ItemInstance(data, amount));
+        else weaponInventory.Add(new WeaponInstance(data, amount));
         CommonUI.Instance.UpdateInventoryUI();
     }
 
-    public bool UseItem(ItemData data) // 아이템 사용 & 여부 확인
+    public bool UseWeapon(WeaponData data) // 도구 사용 & 여부 확인
     {
-        var instance = inventory.Find(i => i.data == data);
+        var instance = weaponInventory.Find(i => i.data == data);
         if (instance != null && instance.quantity > 0)
         {
             instance.quantity--;
@@ -33,14 +33,14 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    public int GetQuantity(ItemData data) // 아이템 수량 확인
+    public int GetWeaponQuantity(WeaponData data) // 무기 수량 확인
     {
-        var instance = inventory.Find(i => i.data == data);
+        var instance = weaponInventory.Find(i => i.data == data);
         return instance != null ? instance.quantity : 0;
     }
 
-    public List<ItemInstance> GetInventory() // 인벤토리 확인
+    public List<WeaponInstance> GetWeaponInventory() // 무기 인벤토리 확인
     {
-        return inventory;
+        return weaponInventory;
     }
 }

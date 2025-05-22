@@ -1,6 +1,8 @@
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Threading;
 
 public class MorningUI : MonoBehaviour
 {
@@ -22,19 +24,24 @@ public class MorningUI : MonoBehaviour
     [Header("Blacksmith Recipe")]
     GameObject blacksmithRecipePanel;
     Button blacksmithRecipeCancelButton;
+    [Header("Weapon Shop")]
+    Transform weaponShopButtonParent;
+    GameObject weaponShopButtonPrefab;
+    List<bool> isPurchaseWeapon; // 구매 여부
 
-    void Awake()
+    void Start()
     {
         panelController = GetComponent<PanelController>();
+        isPurchaseWeapon = new List<bool>(WeaponShopManager.Instance.stockCount);
     }
 
-    public void Init()
+    public void InitPanel()
     {
         morningPanel = Instantiate(UIBinder.Instance.morningPanelPrefab, UIBinder.Instance.panelParent);
         morningPanel.SetActive(false);
     }
 
-    public void InitUI()
+    public void BindUI()
     {
         blacksmithMenuButton = UIBinder.Instance.blacksmithMenuButton;
         forgeButtonParent = UIBinder.Instance.forgeButtonParent;
@@ -47,21 +54,33 @@ public class MorningUI : MonoBehaviour
         blacksmithRecipeCancelButton = UIBinder.Instance.blacksmithRecipeCancelButton;
         blacksmithUnlockButton = UIBinder.Instance.blacksmithUnlockButton;
         blacksmithUnlockText = UIBinder.Instance.blacksmithUnlockText;
+    }
 
+    public void InitUI()
+    {
         blacksmithMenuButton.interactable = false;
-
-        blacksmithMenuButton.onClick.AddListener(() => {
+        blacksmithMenuButton.onClick.RemoveAllListeners();
+        blacksmithMenuButton.onClick.AddListener(() =>
+        {
             blacksmithMenuPanel.SetActive(!blacksmithMenuPanel.activeSelf);
         });
+        blacksmithForgeButton.onClick.RemoveAllListeners();
         blacksmithForgeButton.onClick.AddListener(ShowBlacksmithForgePanel);
+        blacksmithRecipeButton.onClick.RemoveAllListeners();
         blacksmithRecipeButton.onClick.AddListener(ShowBlacksmithRecipePanel);
-        blacksmithForgeCancelButton.onClick.AddListener(() => {
+        blacksmithForgeCancelButton.onClick.RemoveAllListeners();
+        blacksmithForgeCancelButton.onClick.AddListener(() =>
+        {
             blacksmithForgePanel.SetActive(false);
         });
-        blacksmithRecipeCancelButton.onClick.AddListener(() => {
+        blacksmithRecipeCancelButton.onClick.RemoveAllListeners();
+        blacksmithRecipeCancelButton.onClick.AddListener(() =>
+        {
             blacksmithRecipePanel.SetActive(false);
         });
-        blacksmithUnlockButton.onClick.AddListener(() => {
+        blacksmithUnlockButton.onClick.RemoveAllListeners();
+        blacksmithUnlockButton.onClick.AddListener(() =>
+        {
             GameManager.Instance.PurchaseBlacksmithSystemUnlock();
         });
         blacksmithUnlockText.text = $"대장장이 시스템 해금 비용: {GameManager.Instance.blacksmithUnlockGold}G";
@@ -78,7 +97,7 @@ public class MorningUI : MonoBehaviour
         CommonUI.Instance.DisplayResult("대장장이 고용이 해금되었습니다!");
     }
 
-    
+
     void ShowBlacksmithForgePanel()
     {
         panelController.ShowBlacksmithForgePanel();
@@ -95,5 +114,45 @@ public class MorningUI : MonoBehaviour
     public void UpdateBlacksmithUI()
     {
         BlacksmithManager.Instance.UpdateUI();
+    }
+
+
+    public void GenerateWeaponShop(List<WeaponData> stock)
+    {
+        int index = 0;
+        foreach (Transform t in weaponShopButtonParent)
+        {
+            isPurchaseWeapon[index] = false;
+            index++;
+            Destroy(t.gameObject);
+        }
+
+        index = 0;
+        // 버튼 생성
+        foreach (WeaponData weaponData in stock)
+        {
+            GameObject go = Instantiate(weaponShopButtonPrefab, weaponShopButtonParent);
+            go.GetComponent<Image>().sprite = weaponData.icon;
+            go.GetComponent<Button>().onClick
+              .AddListener(() => OnWeaponClicked(weaponData, index));
+            index++;
+        }
+    }
+    
+    void onWeaponClicked(WeaponData weapon, int index)
+    {
+        
+        if (isPurchaseWeapon[index])
+        {
+            CommonUI.Instance.DisplayResult("이미 구매한 무기입니다.");
+            return;
+        }
+
+        string msg = $"{weapon.weaponName}\n등급: {weapon.grade}\n가격: {weapon.cost}\n\n{weapon.description}";
+        popup.ShowConfirmation(
+            msg,
+            () => Purchase(weapon, index),
+            () => { /* 취소 시 아무것도 안 함 */ }
+        );
     }
 }

@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [Header("Data Pool")]
-    public List<ItemData> testStartItems; // 테스트용 시작 아이템
+    public List<WeaponData> testStartWeapons; // 테스트용 시작 아이템
     public List<string> customerNamePool = new List<string> 
     {   // 고객 이름 풀
         "에린", "바츠", "세리아", "닐스", "루에린" 
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     public DayPhase currentPhase = DayPhase.Morning; // 현재 시간대
     int customersPerDay = 5; // 하루에 생성되는 고객 수
     List<Customer> todayCustomers; // 오늘의 고객 리스트
-    Dictionary<Customer, ItemData> assignedItems; // 고객과 대여 아이템 매핑
+    Dictionary<Customer, WeaponData> assignedWeapons; // 고객과 대여 아이템 매핑
     List<DayResult> dayResults; // 오늘의 결과 리스트
     [Header("Tax Settings")]
     public int taxAmount = 2000; // 세금 
@@ -46,13 +46,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // 예시: 테스트용 초기 인벤토리
-        foreach (ItemData item in testStartItems)
-            InventoryManager.Instance.AddItem(item, Random.Range(1, 4));
-
+        Invoke("GetTestWeapon", 0.1f);
         StartMorning(); // 아침 시작
-        CommonUI.Instance.UpdateGold(gold);
-        CommonUI.Instance.UpdatePhase(currentDay, currentPhase);
-        CommonUI.Instance.UpdateInventoryUI();
+    }
+
+    void GetTestWeapon()
+    {
+        foreach (WeaponData Weapon in testStartWeapons)
+            InventoryManager.Instance.AddWeapon(Weapon, Random.Range(1, 4));
     }
 
     public bool SpendGold(int amount) // 골드 소비
@@ -107,8 +108,10 @@ public class GameManager : MonoBehaviour
         currentPhase = DayPhase.Morning;
         // 초기화
         todayCustomers = new List<Customer>();
-        assignedItems   = new Dictionary<Customer, ItemData>();
+        assignedWeapons   = new Dictionary<Customer, WeaponData>();
         dayResults      = new List<DayResult>();
+        // 상점 무기 생성
+        WeaponShopManager.Instance.GenerateStock();
 
         UIManager.Instance.morningUI.ShowMorningUI();
     }
@@ -129,10 +132,10 @@ public class GameManager : MonoBehaviour
         // 결과
         foreach (Customer c in todayCustomers)
         {
-            ItemData item = assignedItems.ContainsKey(c) 
-                            ? assignedItems[c] 
+            WeaponData Weapon = assignedWeapons.ContainsKey(c) 
+                            ? assignedWeapons[c] 
                             : null;
-            DayResult result = SimulateRun(c, item);
+            DayResult result = SimulateRun(c, Weapon);
             dayResults.Add(result);
         }
         UIManager.Instance.nightUI.ShowNightUI(dayResults);
@@ -174,22 +177,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    DayResult SimulateRun(Customer c, ItemData item) // 모험 시뮬레이션
+    DayResult SimulateRun(Customer c, WeaponData Weapon) // 모험 시뮬레이션
     {
-        float baseRate = item == null ? 0 : 0.5f + (c.level - playerLevel)*0.05f;
+        float baseRate = Weapon == null ? 0 : 0.5f + (c.level - playerLevel)*0.05f;
 
         bool isSuccess = Random.value < Mathf.Clamp01(baseRate);
         int reward = isSuccess ? 300 : 0;
 
         if (isSuccess) AddGold(reward); // 보상
 
-        return new DayResult { customer = c, item = item, isSuccess = isSuccess, reward = reward };
+        return new DayResult { customer = c, weapon = Weapon, isSuccess = isSuccess, reward = reward };
     }
 
-    public bool TryAssignItem(Customer c, ItemData item)
+    public bool TryAssignWeapon(Customer c, WeaponData Weapon)
     {
-        if (!InventoryManager.Instance.UseItem(item)) return false;
-        assignedItems[c] = item;
+        if (!InventoryManager.Instance.UseWeapon(Weapon)) return false;
+        assignedWeapons[c] = Weapon;
         return true;
     }
 

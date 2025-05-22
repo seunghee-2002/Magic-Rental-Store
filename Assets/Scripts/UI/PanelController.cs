@@ -14,22 +14,25 @@ public class PanelController : MonoBehaviour
     GameObject blacksmithRecipePanel;
     GameObject heroMenuPanel;
     GameObject heroCreationPanel;
-    GameObject itemSelectionPanel;
+    GameObject WeaponSelectionPanel;
 
-    public void InitPanel()
+    public void BindUI()
     {
         morningPanel = GetComponent<MorningUI>().morningPanel;
         dayPanel = GetComponent<DayUI>().dayPanel;
         nightPanel = GetComponent<NightUI>().nightPanel;
-        
+
         heroRosterPanel = UIBinder.Instance.heroRosterPanel;
         blacksmithMenuPanel = UIBinder.Instance.blacksmithMenuPanel;
         blacksmithForgePanel = UIBinder.Instance.blacksmithForgePanel;
         blacksmithRecipePanel = UIBinder.Instance.blacksmithRecipePanel;
         heroMenuPanel = UIBinder.Instance.heroMenuPanel;
         heroCreationPanel = UIBinder.Instance.heroCreationPanel;
-        itemSelectionPanel = UIBinder.Instance.itemSelectionPanel;
+        WeaponSelectionPanel = UIBinder.Instance.WeaponSelectionPanel;
+    }
 
+    public void InitUI()
+    {
         heroMenuPanel.SetActive(false);
         heroCreationPanel.SetActive(false);
         heroRosterPanel.SetActive(false);
@@ -87,15 +90,15 @@ public class PanelController : MonoBehaviour
         heroRosterPanel.SetActive(true);
     }
 
-    public void ShowItemSelectionPanel()
+    public void ShowWeaponSelectionPanel()
     {
         HideAllPanels();
-        itemSelectionPanel.SetActive(true);
+        WeaponSelectionPanel.SetActive(true);
     }
 
-    public void CloseItemSelectionPanel() // 아이템 선택 팝업 닫기
+    public void CloseWeaponSelectionPanel() // 아이템 선택 팝업 닫기
     {
-        itemSelectionPanel.SetActive(false);
+        WeaponSelectionPanel.SetActive(false);
     }
 
     void HideAllPanels()
@@ -106,6 +109,6 @@ public class PanelController : MonoBehaviour
         blacksmithRecipePanel.SetActive(false);
         heroMenuPanel.SetActive(false);
         heroCreationPanel.SetActive(false);
-        itemSelectionPanel.SetActive(false);
+        WeaponSelectionPanel.SetActive(false);
     }
 }

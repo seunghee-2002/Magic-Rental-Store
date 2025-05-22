@@ -1396,7 +1396,7 @@ GameObject:
   - component: {fileID: 3879497308670992104}
   - component: {fileID: 344550813215355512}
   m_Layer: 5
-  m_Name: Item Selection Panel
+  m_Name: Weapon Selection Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1473,7 +1473,7 @@ GameObject:
   - component: {fileID: 6158221904300466277}
   - component: {fileID: 3237528316385208107}
   m_Layer: 5
-  m_Name: Item Selection Parent
+  m_Name: Weapon Selection Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

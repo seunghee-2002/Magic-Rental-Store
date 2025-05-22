@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class CommonUI : MonoBehaviour
 {
     public static CommonUI Instance;
-    public Transform inventoryPanel; // 인벤토리 패널
+    public Transform inventoryPanelParent; // 인벤토리 패널 생성 위치
     public GameObject inventoryButtonPrefab; // 인벤토리 버튼 프리팹
     public TextMeshProUGUI resultText; // 결과 메시지
     public TextMeshProUGUI goldText; // 소지금 텍스트
@@ -18,16 +18,24 @@ public class CommonUI : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void Init()
+    public void BindUI()
     {
-        inventoryPanel = UIBinder.Instance.inventoryPanel;
+        inventoryPanelParent = UIBinder.Instance.inventoryPanelParent;
         inventoryButtonPrefab = UIBinder.Instance.inventoryButtonPrefab;
         resultText = UIBinder.Instance.resultText;
         goldText = UIBinder.Instance.goldText;
         dayText = UIBinder.Instance.dayText;
         nextPhaseButton = UIBinder.Instance.nextPhaseButton;
+    }
 
+    public void InitUI()
+    {
+        nextPhaseButton.onClick.RemoveAllListeners();
         nextPhaseButton.onClick.AddListener(() => GameManager.Instance.NextPhase());
+
+        UpdateGold(GameManager.Instance.gold);
+        UpdatePhase(GameManager.Instance.currentDay, GameManager.Instance.currentPhase);
+        UpdateInventoryUI();
     }
 
     public void DisplayResult(string msg) // 결과 메시지 표시
@@ -48,13 +56,17 @@ public class CommonUI : MonoBehaviour
 
     public void UpdateInventoryUI() // 인벤토리 UI 업데이트
     {
-        foreach (Transform child in inventoryPanel)
+        if (inventoryPanelParent == null) {
+            Debug.LogError("CommonUI.inventoryPanel이 할당되지 않았습니다! UIBinder.canvas 설정을 확인하세요.");
+            return;
+        }
+        foreach (Transform child in inventoryPanelParent)
             Destroy(child.gameObject);
 
-        foreach (ItemInstance item in InventoryManager.Instance.GetInventory())
+        foreach (WeaponInstance Weapon in InventoryManager.Instance.GetWeaponInventory())
         {
-            GameObject btn = Instantiate(inventoryButtonPrefab, inventoryPanel);
-            btn.GetComponentInChildren<TextMeshProUGUI>().text = $"{item.data.itemName} x{item.quantity}";
+            GameObject btn = Instantiate(inventoryButtonPrefab, inventoryPanelParent);
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = $"{Weapon.data.weaponName} x{Weapon.quantity}";
         }
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 531779226022356969}
   - component: {fileID: 2569902925910246007}
   m_Layer: 5
-  m_Name: Item Selection Button
+  m_Name: Weapon Selection Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

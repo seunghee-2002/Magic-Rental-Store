@@ -15,7 +15,7 @@ public class BlacksmithManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-     public void ForgeItem(int recipeIndex)
+     public void ForgeWeapon(int recipeIndex)
     {
         if (!GameManager.Instance.isBlacksmithUnlocked) return;
         if (recipeIndex < 0 || recipeIndex >= recipes.Count) return;
@@ -27,8 +27,8 @@ public class BlacksmithManager : MonoBehaviour
             return;
 
         // 제작
-        InventoryManager.Instance.AddItem(r.resultItem, 1);
-        CommonUI.Instance.DisplayResult($"{r.resultItem.itemName} 제작 완료!");
+        InventoryManager.Instance.AddWeapon(r.resultWeapon, 1);
+        CommonUI.Instance.DisplayResult($"{r.resultWeapon.weaponName} 제작 완료!");
 
         // 결과 탭 갱신(원한다면)
         UIManager.Instance.morningUI.UpdateBlacksmithUI();
@@ -49,11 +49,11 @@ public class BlacksmithManager : MonoBehaviour
 
             GameObject btn = Instantiate(UIBinder.Instance.forgeButtonPrefab, forgeParent);
             TextMeshProUGUI txt = btn.GetComponentInChildren<TextMeshProUGUI>();
-            txt.text = $"{recipe.resultItem.itemName} ({recipe.cost}G)";
+            txt.text = $"{recipe.resultWeapon.weaponName} ({recipe.cost}G)";
 
             btn.GetComponent<Button>()
                .onClick.AddListener(() => {
-                    ForgeItem(idx);
+                    ForgeWeapon(idx);
                });
         }
     }

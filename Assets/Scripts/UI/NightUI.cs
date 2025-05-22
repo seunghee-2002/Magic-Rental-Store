@@ -17,17 +17,23 @@ public class NightUI : MonoBehaviour
         panelController = GetComponent<PanelController>();
     }
 
-    public void Init()
+    public void InitPanel()
     {
         nightPanel = Instantiate(UIBinder.Instance.nightPanelPrefab, UIBinder.Instance.panelParent);
         nightPanel.SetActive(false);
     }
 
-    public void InitUI()
+    public void BindUI()
     {
         resultEntryPrefab = UIBinder.Instance.resultEntryPrefab;
         resultListParent = UIBinder.Instance.resultListParent;
     }
+
+    public void InitUI()
+    {
+        
+    }
+
     public void ShowNightUI(List<DayResult> dayResults) // 저녁 패널 표시
     {
         panelController.ShowNightUI();
@@ -37,7 +43,7 @@ public class NightUI : MonoBehaviour
         {
             GameObject entry = Instantiate(resultEntryPrefab, resultListParent);
             entry.GetComponentInChildren<TextMeshProUGUI>().text =
-                r.item == null
+                r.weapon == null
                     ? $"{r.customer.name} 아이템 없음"
                     : r.isSuccess
                         ? $"{r.customer.name} 성공! +{r.reward}G"

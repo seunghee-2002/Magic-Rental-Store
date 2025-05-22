@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a87897e6afaeb4b9734a5073b6d208, type: 3}
   m_Name: Cap
   m_EditorClassIdentifier: 
-  itemName: "\uBAA8\uC790"
+  weaponName: "\uBAA8\uC790"
   description: "\u3141\u3148"
+  cost: 100
   grade: 0
   element: 3
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
