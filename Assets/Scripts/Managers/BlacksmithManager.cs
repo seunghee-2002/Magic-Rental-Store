@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using TMPro;
 
 public class BlacksmithManager : MonoBehaviour
 {
@@ -32,29 +30,5 @@ public class BlacksmithManager : MonoBehaviour
 
         // 결과 탭 갱신(원한다면)
         UIManager.Instance.morningUI.UpdateBlacksmithUI();
-    }
-
-    public void UpdateUI()
-    {
-        Transform forgeParent = UIBinder.Instance.forgeButtonParent;
-        
-        // 이전 버튼 삭제
-        foreach (Transform t in forgeParent) Destroy(t.gameObject);
-
-        // 레시피마다 버튼 생성
-        for (int i = 0; i < recipes.Count; i++)
-        {
-            int idx = i;
-            RecipeData recipe = recipes[i];
-
-            GameObject btn = Instantiate(UIBinder.Instance.forgeButtonPrefab, forgeParent);
-            TextMeshProUGUI txt = btn.GetComponentInChildren<TextMeshProUGUI>();
-            txt.text = $"{recipe.resultWeapon.weaponName} ({recipe.cost}G)";
-
-            btn.GetComponent<Button>()
-               .onClick.AddListener(() => {
-                    ForgeWeapon(idx);
-               });
-        }
     }
 }

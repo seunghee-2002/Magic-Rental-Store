@@ -7,79 +7,41 @@ using System.Linq;
 public class DayUI : MonoBehaviour
 {
     PanelController panelController;
-    [Header("Day UI")]
-    public GameObject dayPanel;
     [Header("Hero Menu")]
-    GameObject heroMenuPanel;
-    Button heroMenuButton;
-    Button heroRosterPanelButton;
-    Button heroCreationPanelButton;
+    public GameObject heroMenuPanel;
+    [SerializeField] Button heroMenuButton;
+    [SerializeField] Button heroRosterPanelButton;
+    [SerializeField] Button heroCreationPanelButton;
     public Button heroUnlockButton;
-    TextMeshProUGUI heroUnlockText;
+    [SerializeField] TextMeshProUGUI heroUnlockText;
     [Header("Hero Creation")]
     public GameObject heroCreationPanel;
-    TMP_InputField nameInput;
-    TMP_InputField descInput;
-    TMP_Dropdown elementDropdown;
-    Slider costSlider;
-    Image iconPreview;
+    [SerializeField] TMP_InputField nameInput;
+    [SerializeField] TMP_InputField descInput;
+    [SerializeField] TMP_Dropdown elementDropdown;
+    [SerializeField] Slider costSlider;
+    [SerializeField] Image iconPreview;
     public Customer selectedCustomer;
-    TextMeshProUGUI costValueText;
-    Button heroCreationButton;
-    Button heroCreationCancelButton;
-    Button selectIconButton;
+    [SerializeField] TextMeshProUGUI costValueText;
+    [SerializeField] Button heroCreationButton;
+    [SerializeField] Button heroCreationCancelButton;
+    [SerializeField] Button selectIconButton;
     [Header("Hero Roster")]
-    GameObject heroRosterPanel;
-    GameObject heroRosterButtonPrefab;
-    Transform heroRosterParent;
-    Button heroRosterCancelButton;
+    public GameObject heroRosterPanel;
+    [SerializeField] GameObject heroRosterButtonPrefab;
+    [SerializeField] Transform heroRosterParent;
+    [SerializeField] Button heroRosterCancelButton;
     [Header("Customer")]
-    GameObject customerButtonPrefab;
-    GameObject WeaponSelectionButtonPrefab;
-    GameObject WeaponSelectionPanel;
-    Transform customerListParent;
-    Transform WeaponSelectionParent;
-    Button WeaponSelectionCancelButton;
+    [SerializeField] GameObject customerButtonPrefab;
+    [SerializeField] GameObject WeaponSelectionButtonPrefab;
+    public GameObject WeaponSelectionPanel;
+    [SerializeField] Transform customerListParent;
+    [SerializeField] Transform WeaponSelectionParent;
+    [SerializeField] Button WeaponSelectionCancelButton;
 
     void Awake()
     {
-        panelController = GetComponent<PanelController>();
-    }
-
-    public void InitPanel()
-    {
-        dayPanel = Instantiate(UIBinder.Instance.dayPanelPrefab, UIBinder.Instance.panelParent);
-        dayPanel.SetActive(false);
-    }
-
-    public void BindUI()
-    {
-        customerButtonPrefab = UIBinder.Instance.customerButtonPrefab;
-        WeaponSelectionButtonPrefab = UIBinder.Instance.WeaponSelectionButtonPrefab;
-        WeaponSelectionPanel = UIBinder.Instance.WeaponSelectionPanel;
-        heroMenuPanel = UIBinder.Instance.heroMenuPanel;
-        heroCreationPanel = UIBinder.Instance.heroCreationPanel;
-        heroRosterPanel = UIBinder.Instance.heroRosterPanel;
-        heroRosterButtonPrefab = UIBinder.Instance.heroRosterButtonPrefab;
-        customerListParent = UIBinder.Instance.customerListParent;
-        WeaponSelectionParent = UIBinder.Instance.WeaponSelectionParent;
-        heroRosterParent = UIBinder.Instance.heroRosterParent;
-        heroMenuButton = UIBinder.Instance.heroMenuButton;
-        nameInput = UIBinder.Instance.nameInput;
-        descInput = UIBinder.Instance.descInput;
-        elementDropdown = UIBinder.Instance.elementDropdown;
-        costSlider = UIBinder.Instance.costSlider;
-        iconPreview = UIBinder.Instance.iconPreview;
-        costValueText = UIBinder.Instance.costValueText;
-        heroCreationButton = UIBinder.Instance.heroCreationButton;
-        heroCreationCancelButton = UIBinder.Instance.heroCreationCancelButton;
-        heroRosterCancelButton = UIBinder.Instance.heroRosterCancelButton;
-        selectIconButton = UIBinder.Instance.selectIconButton;
-        WeaponSelectionCancelButton = UIBinder.Instance.WeaponSelectionCancelButton;
-        heroUnlockText = UIBinder.Instance.heroUnlockText;
-        heroRosterPanelButton = UIBinder.Instance.heroRosterPanelButton;
-        heroCreationPanelButton = UIBinder.Instance.heroCreationPanelButton;
-        heroUnlockButton = UIBinder.Instance.heroUnlockButton;
+        panelController = UIManager.Instance.panelController;
     }
 
     public void InitUI()
@@ -151,30 +113,39 @@ public class DayUI : MonoBehaviour
     public void OpenWeaponSelectionPanel(Customer customer) // 아이템 선택 패널 열기
     {
         selectedCustomer = customer;
-        
+
         foreach (Transform t in WeaponSelectionParent) Destroy(t.gameObject); // 이전에 있던 오브젝트 제거
-        foreach (WeaponInstance Weapon in InventoryManager.Instance.GetWeaponInventory()) 
+
+        foreach (WeaponInstance weaponInstance in InventoryManager.Instance.GetWeaponInventory()) 
         {
+            WeaponInstance capturedWeapon = weaponInstance;    // 무기 캡처
+            Customer capturedCustomer = customer;              // 고객도 함께 캡처
+
             GameObject btn = Instantiate(WeaponSelectionButtonPrefab, WeaponSelectionParent);
-            btn.GetComponentInChildren<TextMeshProUGUI>().text = $"{Weapon.data.weaponName} x{Weapon.quantity}";
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = $"{capturedWeapon.data.weaponName} x{capturedWeapon.quantity}";
+
             btn.GetComponent<Button>().onClick.AddListener(() => {
-                if (GameManager.Instance.TryAssignWeapon(selectedCustomer, Weapon.data))
+                if (GameManager.Instance.TryAssignWeapon(capturedWeapon.data))
                 {
-                    CommonUI.Instance.DisplayResult($"{selectedCustomer.name}에게 {Weapon.data.weaponName}을(를) 빌려주었습니다.");
+                    CommonUI.Instance.ShowConfirmation(
+                        $"{capturedCustomer.name}에게 {capturedWeapon.data.weaponName}을(를) 빌려주시겠습니까?",
+                        () => GameManager.Instance.AssignWeapon(capturedCustomer, capturedWeapon.data)
+                    );
                 }
                 else
                 {
-                    CommonUI.Instance.DisplayResult("재고가 없습니다!");
+                    CommonUI.Instance.ShowMessage("아이템이 존재하지 않습니다.");
                 }
                 CloseWeaponSelectionPanel();                
             });
         }
+
         panelController.ShowWeaponSelectionPanel();
     }
 
     void CloseWeaponSelectionPanel() // 아이템 선택 팝업 닫기
     {
-        panelController.CloseWeaponSelectionPanel();
+        WeaponSelectionPanel.SetActive(false);
         selectedCustomer = null;
     }
 

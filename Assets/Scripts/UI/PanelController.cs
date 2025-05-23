@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PanelController : MonoBehaviour
 {
     [Header("Panels")]
+    MorningUI morningUI;
+    DayUI dayUI;
+    NightUI nightUI;
     GameObject morningPanel;
     GameObject dayPanel;
     GameObject nightPanel;
@@ -12,23 +13,31 @@ public class PanelController : MonoBehaviour
     GameObject blacksmithMenuPanel;
     GameObject blacksmithForgePanel;
     GameObject blacksmithRecipePanel;
+    GameObject WeaponShopPanel;
     GameObject heroMenuPanel;
     GameObject heroCreationPanel;
     GameObject WeaponSelectionPanel;
 
     public void BindUI()
     {
-        morningPanel = GetComponent<MorningUI>().morningPanel;
-        dayPanel = GetComponent<DayUI>().dayPanel;
-        nightPanel = GetComponent<NightUI>().nightPanel;
+        morningUI = UIManager.Instance.morningUI;
+        dayUI = UIManager.Instance.dayUI;
+        nightUI = UIManager.Instance.nightUI;
 
-        heroRosterPanel = UIBinder.Instance.heroRosterPanel;
-        blacksmithMenuPanel = UIBinder.Instance.blacksmithMenuPanel;
-        blacksmithForgePanel = UIBinder.Instance.blacksmithForgePanel;
-        blacksmithRecipePanel = UIBinder.Instance.blacksmithRecipePanel;
-        heroMenuPanel = UIBinder.Instance.heroMenuPanel;
-        heroCreationPanel = UIBinder.Instance.heroCreationPanel;
-        WeaponSelectionPanel = UIBinder.Instance.WeaponSelectionPanel;
+        morningPanel = morningUI.gameObject;
+        dayPanel = dayUI.gameObject;
+        nightPanel = nightUI.gameObject;
+
+
+        blacksmithMenuPanel = morningUI.blacksmithMenuPanel;
+        blacksmithForgePanel = morningUI.blacksmithForgePanel;
+        blacksmithRecipePanel = morningUI.blacksmithRecipePanel;
+        WeaponShopPanel = morningUI.weaponShopPanel;
+        heroRosterPanel = dayUI.heroRosterPanel;
+        heroMenuPanel = dayUI.heroMenuPanel;
+        heroCreationPanel = dayUI.heroCreationPanel;
+        WeaponSelectionPanel = dayUI.WeaponSelectionPanel;
+       
     }
 
     public void InitUI()
@@ -36,9 +45,11 @@ public class PanelController : MonoBehaviour
         heroMenuPanel.SetActive(false);
         heroCreationPanel.SetActive(false);
         heroRosterPanel.SetActive(false);
+        WeaponShopPanel.SetActive(false);
         blacksmithMenuPanel.SetActive(false);
         blacksmithForgePanel.SetActive(false);
         blacksmithRecipePanel.SetActive(false);
+        WeaponSelectionPanel.SetActive(false);
     }
 
     public void ShowMorningUI()
@@ -96,9 +107,10 @@ public class PanelController : MonoBehaviour
         WeaponSelectionPanel.SetActive(true);
     }
 
-    public void CloseWeaponSelectionPanel() // 아이템 선택 팝업 닫기
+    public void ShowWeaponShopPanel()
     {
-        WeaponSelectionPanel.SetActive(false);
+        HideAllPanels();
+        WeaponShopPanel.SetActive(true);
     }
 
     void HideAllPanels()
@@ -107,6 +119,7 @@ public class PanelController : MonoBehaviour
         blacksmithMenuPanel.SetActive(false);
         blacksmithForgePanel.SetActive(false);
         blacksmithRecipePanel.SetActive(false);
+        WeaponShopPanel.SetActive(false);
         heroMenuPanel.SetActive(false);
         heroCreationPanel.SetActive(false);
         WeaponSelectionPanel.SetActive(false);

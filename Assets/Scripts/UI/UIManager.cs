@@ -3,9 +3,14 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    [Header("UI Management")]
+    
     CommonUI commonUI;
-    PanelController panelController;
+    public PanelController panelController;
+    [SerializeField] GameObject morningUIPrefab;
+    [SerializeField] GameObject dayUIPrefab;
+    [SerializeField] GameObject nightUIPrefab;
+    [SerializeField] Transform panelParent;
+    [Header("UI Management")]
     public MorningUI morningUI;
     public DayUI dayUI;
     public NightUI nightUI;
@@ -17,21 +22,11 @@ public class UIManager : MonoBehaviour
 
         commonUI = GetComponent<CommonUI>();
         panelController = GetComponent<PanelController>();
-        morningUI = GetComponent<MorningUI>();
-        dayUI = GetComponent<DayUI>();
-        nightUI = GetComponent<NightUI>();
-
-        UIBinder.Instance.InitPanel(); // 패널 정보 가져오기
-        morningUI.InitPanel(); // 패널 생성
-        dayUI.InitPanel();
-        nightUI.InitPanel();
-
-        UIBinder.Instance.BindUI(); // UI 바인딩
-        morningUI.BindUI();
-        dayUI.BindUI();
-        nightUI.BindUI();
+        morningUI = Instantiate(morningUIPrefab, panelParent).GetComponent<MorningUI>();
+        dayUI = Instantiate(dayUIPrefab, panelParent).GetComponent<DayUI>();
+        nightUI = Instantiate(nightUIPrefab, panelParent).GetComponent<NightUI>();
+    
         panelController.BindUI();
-        commonUI.BindUI();
 
         morningUI.InitUI(); // UI 초기화
         dayUI.InitUI();

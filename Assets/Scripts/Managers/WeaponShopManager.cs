@@ -1,36 +1,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using System.Linq;
 
-public class WeaponShopManager : MonoBehaviour 
+public class WeaponShopManager : MonoBehaviour
 {
     public static WeaponShopManager Instance;
-    
-    [Header("무기 풀")]
+
+    [Header("Weapon Pool")]
     public List<WeaponData> commonWeapons;
     public List<WeaponData> uncommonWeapons;
     public List<WeaponData> rareWeapons;
     public List<WeaponData> epicWeapons;
     public List<WeaponData> legendaryWeapons;
-
     [Header("등급 확률 (합 1.0)")]
     public float commonProb = 0.6f;
     public float uncommonProb = 0.2f;
     public float rareProb = 0.1f;
     public float epicProb = 0.07f;
     public float legendaryProb = 0.03f;
-
-    public int stockCount = 5; // 상점 무기 개수
-
+    [Header("Status")]
+    public List<bool> isPurchaseWeapon; // 구매 여부    
+    int stockCount = 5; // 상점 무기 개수
     public List<WeaponData> currentStock = new List<WeaponData>();
 
     private void Awake()
     {
-        if (Instance == null) {
+        if (Instance == null)
+        {
             Instance = this;
-        } else {
+        }
+        else
+        {
             Destroy(gameObject);
         }
+
+        ResetPurchaseStatus();
     }
 
     public void GenerateStock()
@@ -58,4 +63,18 @@ public class WeaponShopManager : MonoBehaviour
             return legendaryWeapons.GetRandomElement();
     }
 
+    public void Purchase(WeaponData weapon, int index)
+    {
+        if (GameManager.Instance.SpendGold(weapon.cost))
+        {
+            InventoryManager.Instance.AddWeapon(weapon, 1);
+            isPurchaseWeapon[index] = true;
+            CommonUI.Instance.DisplayResult($"{weapon.weaponName} 구매 완료!");
+        }
+    }
+
+    public void ResetPurchaseStatus()
+    {
+        isPurchaseWeapon = Enumerable.Repeat(false, stockCount).ToList();
+    }
 }

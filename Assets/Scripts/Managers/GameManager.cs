@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
         dayResults      = new List<DayResult>();
         // 상점 무기 생성
         WeaponShopManager.Instance.GenerateStock();
-
+        UIManager.Instance.morningUI.GenerateWeaponShop();
         UIManager.Instance.morningUI.ShowMorningUI();
     }
 
@@ -189,11 +189,15 @@ public class GameManager : MonoBehaviour
         return new DayResult { customer = c, weapon = Weapon, isSuccess = isSuccess, reward = reward };
     }
 
-    public bool TryAssignWeapon(Customer c, WeaponData Weapon)
-    {
-        if (!InventoryManager.Instance.UseWeapon(Weapon)) return false;
+    public bool TryAssignWeapon(WeaponData Weapon)
+    { // 아이템 대여 가능 여부 확인
+        return InventoryManager.Instance.GetWeaponQuantity(Weapon) != 0;
+    }
+    
+    public void AssignWeapon(Customer c, WeaponData Weapon)
+    { // 아이템 대여
         assignedWeapons[c] = Weapon;
-        return true;
+        InventoryManager.Instance.UseWeapon(Weapon);
     }
 
     public void PurchaseHeroSystemUnlock() // 용사 시스템 해금
@@ -205,7 +209,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.dayUI.heroUnlockButton.gameObject.SetActive(false);
 
         // 이제 “영웅” 메뉴 버튼도 활성화
-        UIManager.Instance.dayUI.OnHeroSystemUnlocked();      
+        UIManager.Instance.dayUI.OnHeroSystemUnlocked();
     }
 
     public void PurchaseBlacksmithSystemUnlock() // 대장장이 시스템 해금

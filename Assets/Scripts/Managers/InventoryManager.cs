@@ -15,7 +15,7 @@ public class InventoryManager : MonoBehaviour
 
     public void AddWeapon(WeaponData data, int amount) // 아이템 추가
     {
-        var existing = weaponInventory.Find(i => i.data == data);
+        WeaponInstance existing = weaponInventory.Find(i => i.data == data);
         if (existing != null) existing.quantity += amount;
         else weaponInventory.Add(new WeaponInstance(data, amount));
         CommonUI.Instance.UpdateInventoryUI();
@@ -23,7 +23,7 @@ public class InventoryManager : MonoBehaviour
 
     public bool UseWeapon(WeaponData data) // 도구 사용 & 여부 확인
     {
-        var instance = weaponInventory.Find(i => i.data == data);
+        WeaponInstance instance = weaponInventory.Find(i => i.data == data);    
         if (instance != null && instance.quantity > 0)
         {
             instance.quantity--;
@@ -35,7 +35,7 @@ public class InventoryManager : MonoBehaviour
 
     public int GetWeaponQuantity(WeaponData data) // 무기 수량 확인
     {
-        var instance = weaponInventory.Find(i => i.data == data);
+        WeaponInstance instance = weaponInventory.Find(i => i.data == data);
         return instance != null ? instance.quantity : 0;
     }
 

@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 2179099971074449996}
   - component: {fileID: 6570140507959932076}
   - component: {fileID: 3362511411844639563}
+  - component: {fileID: 4876492431618561639}
   m_Layer: 5
   m_Name: Day Panel
   m_TagString: Untagged
@@ -362,8 +363,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -379,6 +380,44 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4876492431618561639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238745171868646462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9849a253fc7c28944923d0c7f3288681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroMenuPanel: {fileID: 7292973479489400547}
+  heroMenuButton: {fileID: 22922730689699760}
+  heroRosterPanelButton: {fileID: 4466468427198160430}
+  heroCreationPanelButton: {fileID: 1459247380145285308}
+  heroUnlockButton: {fileID: 1652429145142504543}
+  heroUnlockText: {fileID: 3492965343469659982}
+  heroCreationPanel: {fileID: 6269627028949775203}
+  nameInput: {fileID: 6469989756530489359}
+  descInput: {fileID: 2709754889673454923}
+  elementDropdown: {fileID: 405944788648204261}
+  costSlider: {fileID: 4941864852639816784}
+  iconPreview: {fileID: 0}
+  costValueText: {fileID: 8932244495641974051}
+  heroCreationButton: {fileID: 4043218385971857563}
+  heroCreationCancelButton: {fileID: 1296596237983988743}
+  selectIconButton: {fileID: 6650378437139351104}
+  heroRosterPanel: {fileID: 4402117884225013900}
+  heroRosterButtonPrefab: {fileID: 4346354833708648340, guid: 98f748ecaf518614cafd7e7bd69d7410, type: 3}
+  heroRosterParent: {fileID: 2819061926957099949}
+  heroRosterCancelButton: {fileID: 4865924571423888084}
+  customerButtonPrefab: {fileID: 4346354833708648340, guid: 7942a1073f4d35e4e8fb4ec4df8d6f66, type: 3}
+  WeaponSelectionButtonPrefab: {fileID: 4346354833708648340, guid: be78ea6d13b448a4c96dd706eb60d9fa, type: 3}
+  WeaponSelectionPanel: {fileID: 1758164509453133869}
+  customerListParent: {fileID: 7235122156215980496}
+  WeaponSelectionParent: {fileID: 7997613207786640195}
+  WeaponSelectionCancelButton: {fileID: 3425955992047220769}
 --- !u!1 &370312429276108338
 GameObject:
   m_ObjectHideFlags: 0
@@ -4247,8 +4286,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -155.70001}
-  m_SizeDelta: {x: 0, y: -311.41}
+  m_AnchoredPosition: {x: 0, y: 75.52722}
+  m_SizeDelta: {x: 0, y: -773.8644}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8392871937711251925
 CanvasRenderer:
@@ -4271,7 +4310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
