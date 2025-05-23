@@ -1,7 +1,6 @@
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class MorningUI : MonoBehaviour
 {
@@ -96,8 +95,7 @@ public class MorningUI : MonoBehaviour
             RecipeData recipe = BlacksmithManager.Instance.recipes[i];
 
             GameObject btn = Instantiate(forgeButtonPrefab, forgeButtonParent);
-            TextMeshProUGUI txt = btn.GetComponentInChildren<TextMeshProUGUI>();
-            txt.text = $"{recipe.resultWeapon.weaponName} ({recipe.cost}G)";
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = $"{recipe.resultWeapon.weaponName} ({recipe.cost}G)";
 
             btn.GetComponent<Button>()
                .onClick.AddListener(() => {
@@ -108,10 +106,10 @@ public class MorningUI : MonoBehaviour
 
     void ShowBlacksmithForgePanel()
     {
-        panelController.ShowBlacksmithForgePanel();
-
         // 레시피 UI 업데이트
         UpdateBlacksmithUI();
+
+        panelController.ShowBlacksmithForgePanel();
     }
 
     void ShowBlacksmithRecipePanel()
