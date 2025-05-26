@@ -66,8 +66,13 @@ public class MorningUI : MonoBehaviour
             int idx = i;
             RecipeData recipe = BlacksmithManager.Instance.recipes[i];
             GameObject btn = Instantiate(forgeButtonPrefab, forgeButtonParent);
-            btn.GetComponentInChildren<TextMeshProUGUI>().text = $"{recipe.resultWeapon.weaponName} ({recipe.cost}G)";
-            btn.GetComponent<Button>().onClick.AddListener(() => BlacksmithManager.Instance.ForgeWeapon(idx));
+            TextMeshProUGUI txt = btn.GetComponentInChildren<TextMeshProUGUI>();
+            txt.text = $"{recipe.resultWeapon.weaponName} ({recipe.cost}G)";
+
+            btn.GetComponent<Button>()
+               .onClick.AddListener(() => {
+                    BlacksmithManager.Instance.ForgeWeapon(idx);
+               });
         }
     }
     void ShowBlacksmithForgePanel()
