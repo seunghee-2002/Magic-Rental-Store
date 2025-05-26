@@ -7,19 +7,19 @@ public class CommonUI : MonoBehaviour
 {
     public static CommonUI Instance;
 
-    public GameObject overlayBlocker; // 오버레이 블로커
+    public GameObject overlayBlocker;
     [Header("Inventory")]
-    public Transform inventoryPanelParent; // 인벤토리 패널 생성 위치
-    public GameObject inventoryButtonPrefab; // 인벤토리 버튼 프리팹
+    public Transform inventoryPanelParent;
+    public GameObject inventoryButtonPrefab;
     [Header("Result")]
-    public TextMeshProUGUI resultText; // 결과 메시지
-    public TextMeshProUGUI goldText; // 소지금 텍스트
-    public TextMeshProUGUI dayText; // 날짜 텍스트
-    public Button nextPhaseButton; // 다음 단계 버튼
+    public TextMeshProUGUI resultText;
+    public TextMeshProUGUI goldText;
+    public TextMeshProUGUI dayText;
+    public Button nextPhaseButton;
     [Header("Popup")]
-    [SerializeField] Transform popupParent; // 팝업 생성 위치
-    [SerializeField] GameObject confirmPopupPrefab;
-    [SerializeField] GameObject messagePopupPrefab;
+    public Transform popupParent;
+    public GameObject confirmPopupPrefab;
+    public GameObject messagePopupPrefab;
     ConfirmPopup confirmPopup;
     MessagePopup messagePopup;
 
@@ -39,23 +39,16 @@ public class CommonUI : MonoBehaviour
         UpdateInventoryUI();
     }
 
-    public void DisplayResult(string msg) // 결과 메시지 표시
-    {
-        resultText.text = msg;
-    }
+    public void DisplayResult(string msg) { resultText.text = msg; }
+    public void UpdateGold(int gold) { goldText.text = $"소지금: {gold}G"; }
 
-    public void UpdateGold(int gold) // 소지금 업데이트
-    {
-        goldText.text = $"소지금: {gold}G";
-    }
-
-    public void UpdatePhase(int day, DayPhase dayPhase) // 날짜 업데이트
+    public void UpdatePhase(int day, DayPhase dayPhase)
     {
         string[] phaseNames = { "아침", "낮", "밤" };
         dayText.text = $"{day}일 {phaseNames[(int)dayPhase]}";
     }
 
-    public void UpdateInventoryUI() // 인벤토리 UI 업데이트
+    public void UpdateInventoryUI()
     {
         if (inventoryPanelParent == null)
         {
@@ -65,35 +58,29 @@ public class CommonUI : MonoBehaviour
         foreach (Transform child in inventoryPanelParent)
             Destroy(child.gameObject);
 
-        foreach (WeaponInstance Weapon in InventoryManager.Instance.GetWeaponInventory())
+        foreach (WeaponInstance weapon in InventoryManager.Instance.GetWeaponInventory())
         {
             GameObject btn = Instantiate(inventoryButtonPrefab, inventoryPanelParent);
-            btn.GetComponentInChildren<TextMeshProUGUI>().text = $"{Weapon.data.weaponName} x{Weapon.quantity}";
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = $"{weapon.data.weaponName} x{weapon.quantity}";
         }
     }
 
     public void ShowConfirmation(string message, UnityAction onYes, UnityAction onNo = null)
     {
         overlayBlocker.SetActive(true);
-
         if (confirmPopup == null)
         {
             confirmPopup = Instantiate(confirmPopupPrefab, popupParent).GetComponent<ConfirmPopup>();
             confirmPopup.gameObject.SetActive(false);
         }
-
-        // onNo가 null이면 "취소 시 아무것도 안 함"
         UnityAction cancelAction = onNo ?? (() => { });
-
         confirmPopup.Setup(message, onYes, cancelAction);
         confirmPopup.gameObject.SetActive(true);
     }
 
-
     public void ShowMessage(string message)
     {
         overlayBlocker.SetActive(true);
-
         if (messagePopup == null)
         {
             messagePopup = Instantiate(messagePopupPrefab, popupParent).GetComponent<MessagePopup>();

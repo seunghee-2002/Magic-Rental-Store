@@ -404,6 +404,17 @@ MonoBehaviour:
   elementDropdown: {fileID: 405944788648204261}
   costSlider: {fileID: 4941864852639816784}
   iconPreview: {fileID: 0}
+  selectedCustomer:
+    customerData:
+      name: 
+      desc: 
+      level: 0
+      grade: 0
+      element: 0
+      icon: {fileID: 0}
+    rentedWeapon: {fileID: 0}
+    dungeonData: {fileID: 0}
+    dungeonLevel: 0
   costValueText: {fileID: 8932244495641974051}
   heroCreationButton: {fileID: 4043218385971857563}
   heroCreationCancelButton: {fileID: 1296596237983988743}
@@ -411,13 +422,15 @@ MonoBehaviour:
   heroRosterPanel: {fileID: 4402117884225013900}
   heroRosterButtonPrefab: {fileID: 4346354833708648340, guid: 98f748ecaf518614cafd7e7bd69d7410, type: 3}
   heroRosterParent: {fileID: 2819061926957099949}
-  heroRosterCancelButton: {fileID: 4865924571423888084}
+  heroRosterCloseButton: {fileID: 4865924571423888084}
+  customerInfoPanel: {fileID: 0}
+  customerInfoCloseButton: {fileID: 0}
   customerButtonPrefab: {fileID: 4346354833708648340, guid: 7942a1073f4d35e4e8fb4ec4df8d6f66, type: 3}
   WeaponSelectionButtonPrefab: {fileID: 4346354833708648340, guid: be78ea6d13b448a4c96dd706eb60d9fa, type: 3}
   WeaponSelectionPanel: {fileID: 1758164509453133869}
   customerListParent: {fileID: 7235122156215980496}
   WeaponSelectionParent: {fileID: 7997613207786640195}
-  WeaponSelectionCancelButton: {fileID: 3425955992047220769}
+  WeaponSelectionCloseButton: {fileID: 3425955992047220769}
 --- !u!1 &370312429276108338
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,7 +983,7 @@ GameObject:
   - component: {fileID: 1284216067355506923}
   - component: {fileID: 4865924571423888084}
   m_Layer: 5
-  m_Name: Cancel Button
+  m_Name: Close Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2660,7 +2673,7 @@ GameObject:
   - component: {fileID: 6252083983247729255}
   - component: {fileID: 3425955992047220769}
   m_Layer: 5
-  m_Name: Cancel Button
+  m_Name: Close Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager Instance;
+    public static InventoryManager Instance { get; private set; }
 
     private List<WeaponInstance> weaponInventory = new List<WeaponInstance>();
 
@@ -13,7 +13,7 @@ public class InventoryManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void AddWeapon(WeaponData data, int amount) // 아이템 추가
+    public void AddWeapon(WeaponData data, int amount)
     {
         WeaponInstance existing = weaponInventory.Find(i => i.data == data);
         if (existing != null) existing.quantity += amount;
@@ -21,9 +21,9 @@ public class InventoryManager : MonoBehaviour
         CommonUI.Instance.UpdateInventoryUI();
     }
 
-    public bool UseWeapon(WeaponData data) // 도구 사용 & 여부 확인
+    public bool UseWeapon(WeaponData data)
     {
-        WeaponInstance instance = weaponInventory.Find(i => i.data == data);    
+        WeaponInstance instance = weaponInventory.Find(i => i.data == data);
         if (instance != null && instance.quantity > 0)
         {
             instance.quantity--;
@@ -33,13 +33,13 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    public int GetWeaponQuantity(WeaponData data) // 무기 수량 확인
+    public int GetWeaponQuantity(WeaponData data)
     {
         WeaponInstance instance = weaponInventory.Find(i => i.data == data);
         return instance != null ? instance.quantity : 0;
     }
 
-    public List<WeaponInstance> GetWeaponInventory() // 무기 인벤토리 확인
+    public List<WeaponInstance> GetWeaponInventory()
     {
         return weaponInventory;
     }

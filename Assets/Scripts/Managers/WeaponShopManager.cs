@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 using System.Linq;
 
 public class WeaponShopManager : MonoBehaviour
 {
-    public static WeaponShopManager Instance;
+    public static WeaponShopManager Instance { get; private set; }
 
     [Header("Weapon Pool")]
     public List<WeaponData> commonWeapons;
@@ -20,20 +19,14 @@ public class WeaponShopManager : MonoBehaviour
     public float epicProb = 0.07f;
     public float legendaryProb = 0.03f;
     [Header("Status")]
-    public List<bool> isPurchaseWeapon; // 구매 여부    
-    int stockCount = 5; // 상점 무기 개수
+    public List<bool> isPurchaseWeapon;
+    int stockCount = 5;
     public List<WeaponData> currentStock = new List<WeaponData>();
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
 
         ResetPurchaseStatus();
     }
@@ -42,14 +35,12 @@ public class WeaponShopManager : MonoBehaviour
     {
         currentStock.Clear();
         for (int i = 0; i < stockCount; i++)
-        {
             currentStock.Add(GetRandomWeapon());
-        }
     }
 
     WeaponData GetRandomWeapon()
     {
-        float roll = Random.value; // 0.0f 이상 1.0f 미만의 값
+        float roll = Random.value;
 
         if (roll < commonProb)
             return commonWeapons.GetRandomElement();

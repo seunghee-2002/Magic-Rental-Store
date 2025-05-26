@@ -2,21 +2,22 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class Hero
+public class HeroData
 {
-    public string heroName;       // 용사 이름
-    public string description;    // 용사 설명
-    public Grade grade;          // 용사 등급
-    public Element element;      // 용사 속성
-    public Sprite icon;          // 용사 아이콘
+    public string heroName;
+    public string description;
+    public int level;
+    public Grade grade;
+    public Element element;
+    public Sprite icon;
 }
 
 public class HeroManager : MonoBehaviour
 {
-    public static HeroManager Instance;
+    public static HeroManager Instance { get; private set; }
 
     [Header("고용된 용사 명단")]
-    public List<Hero> heroRoster = new List<Hero>();
+    public List<HeroData> heroRoster = new List<HeroData>();
 
     void Awake()
     {
@@ -24,17 +25,14 @@ public class HeroManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    float[] GetGradeWeights(int cost) // 등급 가중치 계산
+    float[] GetGradeWeights(int cost)
     {
-        // cost 에 따라 가중치 배율을 조절
-        // 예: cost가 높을수록 레어 이상 확률 상승
-        float baseCommon   = Mathf.Max(0, 1000 - cost) / 1000f;   // cost가 작으면 common 우선
+        float baseCommon = Mathf.Max(0, 1000 - cost) / 1000f;
         float baseUncommon = Mathf.Clamp(cost / 1000f, 0f, 0.5f);
-        float baseRare     = Mathf.Clamp((cost - 1000) / 2000f, 0f, 0.3f);
-        float baseEpic     = Mathf.Clamp((cost - 2000) / 3000f, 0f, 0.15f);
-        float baseLegend   = Mathf.Clamp((cost - 4000) / 5000f, 0f, 0.05f);
+        float baseRare = Mathf.Clamp((cost - 1000) / 2000f, 0f, 0.3f);
+        float baseEpic = Mathf.Clamp((cost - 2000) / 3000f, 0f, 0.15f);
+        float baseLegend = Mathf.Clamp((cost - 4000) / 5000f, 0f, 0.05f);
 
-        // 총합 1.0 이 되도록 정규화
         float sum = baseCommon + baseUncommon + baseRare + baseEpic + baseLegend;
         return new float[] {
             baseCommon   / sum,
@@ -45,10 +43,9 @@ public class HeroManager : MonoBehaviour
         };
     }
 
-    Grade RollRandomGrade(int cost) // 랜덤 등급 결정
+    Grade RollRandomGrade(int cost)
     {
         float[] weights = GetGradeWeights(cost);
-        // Grade enum 순서가 Common, Uncommon, Rare, Epic, Legendary 이어야 합니다.
         float r = Random.value;
         float cumulative = 0f;
         for (int i = 0; i < weights.Length; i++)
@@ -60,23 +57,30 @@ public class HeroManager : MonoBehaviour
         return Grade.Common;
     }
 
-    
-    public void CreateHero(string name, string desc, Element element, Sprite icon, int cost) // 용사 제작
+    public void CreateHero(string name, string desc, Element element, Sprite icon, int cost)
     {
         if (!GameManager.Instance.SpendGold(cost)) return;
 
         Grade rolledGrade = RollRandomGrade(cost);
 
-        Hero newHero = new Hero {
-            heroName  = name,
+        HeroData newHero = new HeroData
+        {
+            heroName = name,
             description = desc,
-            grade     = rolledGrade,
-            element   = element,
-            icon      = icon
+            level = SetLevel(cost),
+            grade = rolledGrade,
+            element = element,
+            icon = icon
         };
 
         heroRoster.Add(newHero);
         CommonUI.Instance.DisplayResult($"용사 {name} (등급: {rolledGrade})를 제작했습니다!");
         UIManager.Instance.dayUI.UpdateHeroUI();
+    }
+
+    int SetLevel(int cost)
+    {
+        int baseLevel = Mathf.Clamp(cost / 1000, 1, 99);
+        return baseLevel + Random.Range(-1, 2);
     }
 }
