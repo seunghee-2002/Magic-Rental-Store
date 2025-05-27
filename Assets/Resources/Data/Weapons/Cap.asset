@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57a87897e6afaeb4b9734a5073b6d208, type: 3}
-  m_Name: Earth Hammer
+  m_Name: Cap
   m_EditorClassIdentifier: 
-  weaponName: "\uD070 \uB9DD\uCE58"
-  description: "\uB69C\uCF85"
-  cost: 150
-  grade: 1
-  element: 2
-  icon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  weaponName: "\uBAA8\uC790"
+  description: "\u3141\u3148"
+  cost: 100
+  grade: 0
+  element: 3
+  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   prefab: {fileID: 0}

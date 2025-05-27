@@ -307,7 +307,6 @@ GameObject:
   - component: {fileID: 2179099971074449996}
   - component: {fileID: 6570140507959932076}
   - component: {fileID: 3362511411844639563}
-  - component: {fileID: 4876492431618561639}
   m_Layer: 5
   m_Name: Day Panel
   m_TagString: Untagged
@@ -363,8 +362,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -380,6 +379,8 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+<<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!114 &4876492431618561639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,6 +432,10 @@ MonoBehaviour:
   customerListParent: {fileID: 7235122156215980496}
   WeaponSelectionParent: {fileID: 7997613207786640195}
   WeaponSelectionCloseButton: {fileID: 3425955992047220769}
+=======
+>>>>>>> parent of 0773a29 (mvp2)
+=======
+>>>>>>> parent of 0773a29 (mvp2)
 --- !u!1 &370312429276108338
 GameObject:
   m_ObjectHideFlags: 0
@@ -4299,8 +4304,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 75.52722}
-  m_SizeDelta: {x: 0, y: -773.8644}
+  m_AnchoredPosition: {x: 0, y: -155.70001}
+  m_SizeDelta: {x: 0, y: -311.41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8392871937711251925
 CanvasRenderer:
@@ -4323,7 +4328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

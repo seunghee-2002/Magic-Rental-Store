@@ -15,7 +15,7 @@ public class InventoryManager : MonoBehaviour
 
     public void AddWeapon(WeaponData data, int amount)
     {
-        WeaponInstance existing = weaponInventory.Find(i => i.data == data);
+        var existing = weaponInventory.Find(i => i.data == data);
         if (existing != null) existing.quantity += amount;
         else weaponInventory.Add(new WeaponInstance(data, amount));
         CommonUI.Instance.UpdateInventoryUI();
@@ -23,7 +23,15 @@ public class InventoryManager : MonoBehaviour
 
     public bool UseWeapon(WeaponData data)
     {
+<<<<<<< HEAD
+<<<<<<< HEAD
         WeaponInstance instance = weaponInventory.Find(i => i.data == data);
+=======
+        var instance = weaponInventory.Find(i => i.data == data);
+>>>>>>> parent of 0773a29 (mvp2)
+=======
+        var instance = weaponInventory.Find(i => i.data == data);
+>>>>>>> parent of 0773a29 (mvp2)
         if (instance != null && instance.quantity > 0)
         {
             instance.quantity--;
@@ -35,7 +43,7 @@ public class InventoryManager : MonoBehaviour
 
     public int GetWeaponQuantity(WeaponData data)
     {
-        WeaponInstance instance = weaponInventory.Find(i => i.data == data);
+        var instance = weaponInventory.Find(i => i.data == data);
         return instance != null ? instance.quantity : 0;
     }
 

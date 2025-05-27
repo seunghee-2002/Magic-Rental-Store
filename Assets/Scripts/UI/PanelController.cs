@@ -1,8 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PanelController : MonoBehaviour
 {
     [Header("Panels")]
+<<<<<<< HEAD
+<<<<<<< HEAD
     public MorningUI morningUI;
     public DayUI dayUI;
     public NightUI nightUI;
@@ -18,13 +22,29 @@ public class PanelController : MonoBehaviour
     public GameObject heroMenuPanel;
     public GameObject heroCreationPanel;
     public GameObject weaponSelectionPanel;
+=======
+=======
+>>>>>>> parent of 0773a29 (mvp2)
+    GameObject morningPanel;
+    GameObject dayPanel;
+    GameObject nightPanel;
+    GameObject heroRosterPanel;
+    GameObject blacksmithMenuPanel;
+    GameObject blacksmithForgePanel;
+    GameObject blacksmithRecipePanel;
+    GameObject heroMenuPanel;
+    GameObject heroCreationPanel;
+    GameObject WeaponSelectionPanel;
+>>>>>>> parent of 0773a29 (mvp2)
 
     public void BindUI()
     {
-        morningUI = UIManager.Instance.morningUI;
-        dayUI = UIManager.Instance.dayUI;
-        nightUI = UIManager.Instance.nightUI;
+        morningPanel = GetComponent<MorningUI>().morningPanel;
+        dayPanel = GetComponent<DayUI>().dayPanel;
+        nightPanel = GetComponent<NightUI>().nightPanel;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
         morningPanel = morningUI.gameObject;
         dayPanel = dayUI.gameObject;
         nightPanel = nightUI.gameObject;
@@ -37,6 +57,20 @@ public class PanelController : MonoBehaviour
         heroMenuPanel = dayUI.heroMenuPanel;
         heroCreationPanel = dayUI.heroCreationPanel;
         weaponSelectionPanel = dayUI.weaponSelectionPanel;
+=======
+=======
+>>>>>>> parent of 0773a29 (mvp2)
+        heroRosterPanel = UIBinder.Instance.heroRosterPanel;
+        blacksmithMenuPanel = UIBinder.Instance.blacksmithMenuPanel;
+        blacksmithForgePanel = UIBinder.Instance.blacksmithForgePanel;
+        blacksmithRecipePanel = UIBinder.Instance.blacksmithRecipePanel;
+        heroMenuPanel = UIBinder.Instance.heroMenuPanel;
+        heroCreationPanel = UIBinder.Instance.heroCreationPanel;
+        WeaponSelectionPanel = UIBinder.Instance.WeaponSelectionPanel;
+<<<<<<< HEAD
+>>>>>>> parent of 0773a29 (mvp2)
+=======
+>>>>>>> parent of 0773a29 (mvp2)
     }
 
     public void InitUI()
@@ -44,11 +78,23 @@ public class PanelController : MonoBehaviour
         heroMenuPanel.SetActive(false);
         heroCreationPanel.SetActive(false);
         heroRosterPanel.SetActive(false);
+<<<<<<< HEAD
+<<<<<<< HEAD
         weaponShopPanel.SetActive(false);
         blacksmithMenuPanel.SetActive(false);
         blacksmithForgePanel.SetActive(false);
         blacksmithRecipePanel.SetActive(false);
         weaponSelectionPanel.SetActive(false);
+=======
+        blacksmithMenuPanel.SetActive(false);
+        blacksmithForgePanel.SetActive(false);
+        blacksmithRecipePanel.SetActive(false);
+>>>>>>> parent of 0773a29 (mvp2)
+=======
+        blacksmithMenuPanel.SetActive(false);
+        blacksmithForgePanel.SetActive(false);
+        blacksmithRecipePanel.SetActive(false);
+>>>>>>> parent of 0773a29 (mvp2)
     }
 
     public void ShowMorningUI()
@@ -92,10 +138,24 @@ public class PanelController : MonoBehaviour
         HideAllPanels();
         weaponSelectionPanel.SetActive(true);
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
     public void ShowWeaponShopPanel()
     {
         HideAllPanels();
         weaponShopPanel.SetActive(true);
+=======
+
+    public void CloseWeaponSelectionPanel() // 아이템 선택 팝업 닫기
+    {
+        WeaponSelectionPanel.SetActive(false);
+>>>>>>> parent of 0773a29 (mvp2)
+=======
+
+    public void CloseWeaponSelectionPanel() // 아이템 선택 팝업 닫기
+    {
+        WeaponSelectionPanel.SetActive(false);
+>>>>>>> parent of 0773a29 (mvp2)
     }
 
     void HideAllPanels()
@@ -104,7 +164,13 @@ public class PanelController : MonoBehaviour
         blacksmithMenuPanel.SetActive(false);
         blacksmithForgePanel.SetActive(false);
         blacksmithRecipePanel.SetActive(false);
+<<<<<<< HEAD
+<<<<<<< HEAD
         weaponShopPanel.SetActive(false);
+=======
+>>>>>>> parent of 0773a29 (mvp2)
+=======
+>>>>>>> parent of 0773a29 (mvp2)
         heroMenuPanel.SetActive(false);
         heroCreationPanel.SetActive(false);
         weaponSelectionPanel.SetActive(false);

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57a87897e6afaeb4b9734a5073b6d208, type: 3}
-  m_Name: StormPiercer
+  m_Name: Fire Sword
   m_EditorClassIdentifier: 
-  weaponName: "\uBC88\uAC1C \uC11D\uAD81"
-  description: "\uCC9C\uB465\uC774 \uB0A0\uB77C\uAC00\uB294 \uC11D\uAD81."
-  cost: 300
-  grade: 2
-  element: 4
-  icon: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  weaponName: "\uBD88 \uAC80"
+  description: "\uD65C\uD65C \uD0C0\uC624\uB978\uB2F9"
+  cost: 100
+  grade: 0
+  element: 0
+  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   prefab: {fileID: 0}

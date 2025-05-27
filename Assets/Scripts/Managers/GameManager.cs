@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     {
         currentPhase = DayPhase.Morning;
         WeaponShopManager.Instance.GenerateStock();
-        UIManager.Instance.morningUI.GenerateWeaponShop();
+
         UIManager.Instance.morningUI.ShowMorningUI();
     }
 
@@ -108,13 +108,81 @@ public class GameManager : MonoBehaviour
         CustomerManager.Instance.InitCustomer();
     }
 
+<<<<<<< HEAD
     public void PurchaseHeroSystemUnlock()
+=======
+    Customer GenerateCustomer() // 고객 생성
+    {
+        Customer customer = new Customer();
+        customer.name = customerNamePool[Random.Range(0, customerNamePool.Count)];
+        customer.desc = customerDescPool[Random.Range(0, customerDescPool.Count)];
+        customer.level = SetCustomerLevel();
+        customer.grade = SetCustomerGrade();
+        customer.element = (Element)Random.Range(0, System.Enum.GetValues(typeof(Element)).Length);
+        customer.icon = iconPool[Random.Range(0, iconPool.Count)];
+
+        return customer;
+    }
+
+    int SetCustomerLevel() // 고객 레벨은 ±1~2 범위에서 조절
+    {
+        return Mathf.Clamp(playerLevel + Random.Range(-1, 2), 1, 99);
+    }
+
+    Grade SetCustomerGrade() // 고객 등급은 ±1~2 범위에서 조절
+    {
+        switch(playerLevel) {
+            case 1:
+                return Grade.Common;
+            case 2:
+                return Grade.Uncommon;
+            case 3:
+                return Grade.Rare;
+            case 4:
+                return Grade.Epic;
+            case 5:
+                return Grade.Legendary;
+            default:
+                return Grade.Common;
+        }
+    }
+
+    DayResult SimulateRun(Customer c, WeaponData Weapon) // 모험 시뮬레이션
+    {
+        float baseRate = Weapon == null ? 0 : 0.5f + (c.level - playerLevel)*0.05f;
+
+        bool isSuccess = Random.value < Mathf.Clamp01(baseRate);
+        int reward = isSuccess ? 300 : 0;
+
+        if (isSuccess) AddGold(reward); // 보상
+
+        return new DayResult { customer = c, weapon = Weapon, isSuccess = isSuccess, reward = reward };
+    }
+
+    public bool TryAssignWeapon(Customer c, WeaponData Weapon)
+    {
+        if (!InventoryManager.Instance.UseWeapon(Weapon)) return false;
+        assignedWeapons[c] = Weapon;
+        return true;
+    }
+
+    public void PurchaseHeroSystemUnlock() // 용사 시스템 해금
+>>>>>>> parent of 0773a29 (mvp2)
     {
         if (!SpendGold(heroUnlockGold)) return;
         isHeroSystemUnlocked = true;
         CommonUI.Instance.DisplayResult("용사 제작 시스템이 해금되었습니다!");
         UIManager.Instance.dayUI.heroUnlockButton.gameObject.SetActive(false);
+<<<<<<< HEAD
         UIManager.Instance.dayUI.OnHeroSystemUnlocked();
+=======
+
+        // 이제 “영웅” 메뉴 버튼도 활성화
+        UIManager.Instance.dayUI.OnHeroSystemUnlocked();      
+<<<<<<< HEAD
+>>>>>>> parent of 0773a29 (mvp2)
+=======
+>>>>>>> parent of 0773a29 (mvp2)
     }
 
     public void PurchaseBlacksmithSystemUnlock()
