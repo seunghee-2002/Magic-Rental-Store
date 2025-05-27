@@ -1,7 +1,6 @@
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class MorningUI : MonoBehaviour
 {
@@ -72,10 +71,8 @@ public class MorningUI : MonoBehaviour
     }
     void ShowBlacksmithForgePanel()
     {
-        panelController.ShowBlacksmithForgePanel();
-
-        // 레시피 UI 업데이트
         UpdateBlacksmithUI();
+        panelController.ShowBlacksmithForgePanel();
     }
     void ShowBlacksmithRecipePanel() { panelController.ShowBlacksmithRecipePanel(); }
     public void ShowWeaponShop() { panelController.ShowWeaponShopPanel(); }
