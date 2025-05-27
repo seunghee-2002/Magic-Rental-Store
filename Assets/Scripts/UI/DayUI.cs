@@ -7,11 +7,7 @@ using System.Linq;
 public class DayUI : MonoBehaviour
 {
     PanelController panelController;
-    [Header("Day UI")]
-    public GameObject dayPanel;
     [Header("Hero Menu")]
-<<<<<<< HEAD
-<<<<<<< HEAD
     public GameObject heroMenuPanel;
     public Button heroMenuButton;
     public Button heroRosterPanelButton;
@@ -44,139 +40,6 @@ public class DayUI : MonoBehaviour
     public CustomerInstance selectedCustomer;
 
     void Awake() { panelController = UIManager.Instance.panelController; }
-=======
-    GameObject heroMenuPanel;
-    Button heroMenuButton;
-    Button heroRosterPanelButton;
-    Button heroCreationPanelButton;
-    public Button heroUnlockButton;
-    TextMeshProUGUI heroUnlockText;
-    [Header("Hero Creation")]
-    public GameObject heroCreationPanel;
-    TMP_InputField nameInput;
-    TMP_InputField descInput;
-    TMP_Dropdown elementDropdown;
-    Slider costSlider;
-    Image iconPreview;
-    public Customer selectedCustomer;
-    TextMeshProUGUI costValueText;
-    Button heroCreationButton;
-    Button heroCreationCancelButton;
-    Button selectIconButton;
-    [Header("Hero Roster")]
-=======
-    GameObject heroMenuPanel;
-    Button heroMenuButton;
-    Button heroRosterPanelButton;
-    Button heroCreationPanelButton;
-    public Button heroUnlockButton;
-    TextMeshProUGUI heroUnlockText;
-    [Header("Hero Creation")]
-    public GameObject heroCreationPanel;
-    TMP_InputField nameInput;
-    TMP_InputField descInput;
-    TMP_Dropdown elementDropdown;
-    Slider costSlider;
-    Image iconPreview;
-    public Customer selectedCustomer;
-    TextMeshProUGUI costValueText;
-    Button heroCreationButton;
-    Button heroCreationCancelButton;
-    Button selectIconButton;
-    [Header("Hero Roster")]
->>>>>>> parent of 0773a29 (mvp2)
-    GameObject heroRosterPanel;
-    GameObject heroRosterButtonPrefab;
-    Transform heroRosterParent;
-    Button heroRosterCancelButton;
-    [Header("Customer")]
-    GameObject customerButtonPrefab;
-    GameObject WeaponSelectionButtonPrefab;
-    GameObject WeaponSelectionPanel;
-    Transform customerListParent;
-    Transform WeaponSelectionParent;
-    Button WeaponSelectionCancelButton;
-
-    void Awake()
-    {
-        panelController = GetComponent<PanelController>();
-<<<<<<< HEAD
-=======
-    }
-
-    public void InitPanel()
-    {
-        dayPanel = Instantiate(UIBinder.Instance.dayPanelPrefab, UIBinder.Instance.panelParent);
-        dayPanel.SetActive(false);
-    }
-
-    public void BindUI()
-    {
-        customerButtonPrefab = UIBinder.Instance.customerButtonPrefab;
-        WeaponSelectionButtonPrefab = UIBinder.Instance.WeaponSelectionButtonPrefab;
-        WeaponSelectionPanel = UIBinder.Instance.WeaponSelectionPanel;
-        heroMenuPanel = UIBinder.Instance.heroMenuPanel;
-        heroCreationPanel = UIBinder.Instance.heroCreationPanel;
-        heroRosterPanel = UIBinder.Instance.heroRosterPanel;
-        heroRosterButtonPrefab = UIBinder.Instance.heroRosterButtonPrefab;
-        customerListParent = UIBinder.Instance.customerListParent;
-        WeaponSelectionParent = UIBinder.Instance.WeaponSelectionParent;
-        heroRosterParent = UIBinder.Instance.heroRosterParent;
-        heroMenuButton = UIBinder.Instance.heroMenuButton;
-        nameInput = UIBinder.Instance.nameInput;
-        descInput = UIBinder.Instance.descInput;
-        elementDropdown = UIBinder.Instance.elementDropdown;
-        costSlider = UIBinder.Instance.costSlider;
-        iconPreview = UIBinder.Instance.iconPreview;
-        costValueText = UIBinder.Instance.costValueText;
-        heroCreationButton = UIBinder.Instance.heroCreationButton;
-        heroCreationCancelButton = UIBinder.Instance.heroCreationCancelButton;
-        heroRosterCancelButton = UIBinder.Instance.heroRosterCancelButton;
-        selectIconButton = UIBinder.Instance.selectIconButton;
-        WeaponSelectionCancelButton = UIBinder.Instance.WeaponSelectionCancelButton;
-        heroUnlockText = UIBinder.Instance.heroUnlockText;
-        heroRosterPanelButton = UIBinder.Instance.heroRosterPanelButton;
-        heroCreationPanelButton = UIBinder.Instance.heroCreationPanelButton;
-        heroUnlockButton = UIBinder.Instance.heroUnlockButton;
->>>>>>> parent of 0773a29 (mvp2)
-    }
-
-    public void InitPanel()
-    {
-        dayPanel = Instantiate(UIBinder.Instance.dayPanelPrefab, UIBinder.Instance.panelParent);
-        dayPanel.SetActive(false);
-    }
-
-    public void BindUI()
-    {
-        customerButtonPrefab = UIBinder.Instance.customerButtonPrefab;
-        WeaponSelectionButtonPrefab = UIBinder.Instance.WeaponSelectionButtonPrefab;
-        WeaponSelectionPanel = UIBinder.Instance.WeaponSelectionPanel;
-        heroMenuPanel = UIBinder.Instance.heroMenuPanel;
-        heroCreationPanel = UIBinder.Instance.heroCreationPanel;
-        heroRosterPanel = UIBinder.Instance.heroRosterPanel;
-        heroRosterButtonPrefab = UIBinder.Instance.heroRosterButtonPrefab;
-        customerListParent = UIBinder.Instance.customerListParent;
-        WeaponSelectionParent = UIBinder.Instance.WeaponSelectionParent;
-        heroRosterParent = UIBinder.Instance.heroRosterParent;
-        heroMenuButton = UIBinder.Instance.heroMenuButton;
-        nameInput = UIBinder.Instance.nameInput;
-        descInput = UIBinder.Instance.descInput;
-        elementDropdown = UIBinder.Instance.elementDropdown;
-        costSlider = UIBinder.Instance.costSlider;
-        iconPreview = UIBinder.Instance.iconPreview;
-        costValueText = UIBinder.Instance.costValueText;
-        heroCreationButton = UIBinder.Instance.heroCreationButton;
-        heroCreationCancelButton = UIBinder.Instance.heroCreationCancelButton;
-        heroRosterCancelButton = UIBinder.Instance.heroRosterCancelButton;
-        selectIconButton = UIBinder.Instance.selectIconButton;
-        WeaponSelectionCancelButton = UIBinder.Instance.WeaponSelectionCancelButton;
-        heroUnlockText = UIBinder.Instance.heroUnlockText;
-        heroRosterPanelButton = UIBinder.Instance.heroRosterPanelButton;
-        heroCreationPanelButton = UIBinder.Instance.heroCreationPanelButton;
-        heroUnlockButton = UIBinder.Instance.heroUnlockButton;
-    }
->>>>>>> parent of 0773a29 (mvp2)
 
     public void InitUI()
     {
@@ -241,39 +104,6 @@ public class DayUI : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
-=======
-    public void OpenWeaponSelectionPanel(Customer customer) // 아이템 선택 패널 열기
-    {
-        selectedCustomer = customer;
-        
-        foreach (Transform t in WeaponSelectionParent) Destroy(t.gameObject); // 이전에 있던 오브젝트 제거
-        foreach (WeaponInstance Weapon in InventoryManager.Instance.GetWeaponInventory()) 
-        {
-            GameObject btn = Instantiate(WeaponSelectionButtonPrefab, WeaponSelectionParent);
-            btn.GetComponentInChildren<TextMeshProUGUI>().text = $"{Weapon.data.weaponName} x{Weapon.quantity}";
-            btn.GetComponent<Button>().onClick.AddListener(() => {
-                if (GameManager.Instance.TryAssignWeapon(selectedCustomer, Weapon.data))
-                {
-                    CommonUI.Instance.DisplayResult($"{selectedCustomer.name}에게 {Weapon.data.weaponName}을(를) 빌려주었습니다.");
-                }
-                else
-                {
-                    CommonUI.Instance.DisplayResult("재고가 없습니다!");
-                }
-                CloseWeaponSelectionPanel();                
-            });
-        }
-        panelController.ShowWeaponSelectionPanel();
-    }
-
-    void CloseWeaponSelectionPanel() // 아이템 선택 팝업 닫기
-    {
-        panelController.CloseWeaponSelectionPanel();
-        selectedCustomer = null;
-    }
-
->>>>>>> parent of 0773a29 (mvp2)
     public void OnHeroSystemUnlocked()
     {
         heroMenuButton.interactable = true;

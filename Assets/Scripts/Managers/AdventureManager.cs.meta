@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scripts/Managers/AdventureManager.cs.meta
 guid: b1aca73604fa69a459daea579b3d27b7
-========
-guid: 5d34b61769ce9da42a236c79145c9ace
->>>>>>>> parent of 0773a29 (mvp2):Assets/Scripts/UI/PopupManager.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

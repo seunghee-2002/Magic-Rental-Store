@@ -1,12 +1,11 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class CommonUI : MonoBehaviour
 {
     public static CommonUI Instance;
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     public GameObject overlayBlocker;
     [Header("Inventory")]
@@ -23,34 +22,11 @@ public class CommonUI : MonoBehaviour
     public GameObject messagePopupPrefab;
     ConfirmPopup confirmPopup;
     MessagePopup messagePopup;
-=======
-=======
->>>>>>> parent of 0773a29 (mvp2)
-    public Transform inventoryPanelParent; // 인벤토리 패널 생성 위치
-    public GameObject inventoryButtonPrefab; // 인벤토리 버튼 프리팹
-    public TextMeshProUGUI resultText; // 결과 메시지
-    public TextMeshProUGUI goldText; // 소지금 텍스트
-    public TextMeshProUGUI dayText; // 날짜 텍스트
-    public Button nextPhaseButton; // 다음 단계 버튼
-<<<<<<< HEAD
->>>>>>> parent of 0773a29 (mvp2)
-=======
->>>>>>> parent of 0773a29 (mvp2)
 
     void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-    }
-
-    public void BindUI()
-    {
-        inventoryPanelParent = UIBinder.Instance.inventoryPanelParent;
-        inventoryButtonPrefab = UIBinder.Instance.inventoryButtonPrefab;
-        resultText = UIBinder.Instance.resultText;
-        goldText = UIBinder.Instance.goldText;
-        dayText = UIBinder.Instance.dayText;
-        nextPhaseButton = UIBinder.Instance.nextPhaseButton;
     }
 
     public void InitUI()
@@ -74,7 +50,8 @@ public class CommonUI : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
-        if (inventoryPanelParent == null) {
+        if (inventoryPanelParent == null)
+        {
             Debug.LogError("CommonUI.inventoryPanel이 할당되지 않았습니다! UIBinder.canvas 설정을 확인하세요.");
             return;
         }
@@ -87,8 +64,6 @@ public class CommonUI : MonoBehaviour
             btn.GetComponentInChildren<TextMeshProUGUI>().text = $"{weapon.data.weaponName} x{weapon.quantity}";
         }
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     public void ShowConfirmation(string message, UnityAction onYes, UnityAction onNo = null)
     {
@@ -114,8 +89,4 @@ public class CommonUI : MonoBehaviour
         messagePopup.Setup(message);
         messagePopup.gameObject.SetActive(true);
     }
-=======
->>>>>>> parent of 0773a29 (mvp2)
-=======
->>>>>>> parent of 0773a29 (mvp2)
 }

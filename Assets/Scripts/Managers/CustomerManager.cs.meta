@@ -1,14 +1,10 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scripts/Managers/CustomerManager.cs.meta
 guid: 6a49aa98add4dd04884a3f481bdf45f0
-========
-guid: 95c4637edad182446b1b462bc8ffa95b
->>>>>>>> parent of 0773a29 (mvp2):Assets/Scripts/UI/UIBinder.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
-  executionOrder: -80
+  executionOrder: 0
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 
