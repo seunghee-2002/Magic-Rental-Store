@@ -3,22 +3,35 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
-
+    public static GameManager Instance;
     [Header("Data Pool")]
-    public List<WeaponData> testStartWeapons;
+    public List<WeaponData> testStartWeapons; // 테스트용 시작 아이템
+    public List<string> customerNamePool = new List<string> 
+    {   // 고객 이름 풀
+        "에린", "바츠", "세리아", "닐스", "루에린" 
+    }; 
+    public List<string> customerDescPool = new List<string> 
+    {   // 고객 설명 풀
+        "한때 유명했던 모험가", "초보 연금술사", "던전에서 길 잃은 생존자"
+    }; 
+    public List<Sprite> iconPool; // 고객 아이콘 풀
+    public Customer currentCustomer;
     [Header("Player State")]
-    public int playerLevel = 1;
-    public int gold = 1000;
+    public int playerLevel = 1; // 플레이어 레벨
+    public int gold = 1000000;
     public int currentDay = 1;
     [Header("Game State")]
-    public DayPhase currentPhase = DayPhase.Morning;
+    public DayPhase currentPhase = DayPhase.Morning; // 현재 시간대
+    int customersPerDay = 5; // 하루에 생성되는 고객 수
+    List<Customer> todayCustomers; // 오늘의 고객 리스트
+    Dictionary<Customer, WeaponData> assignedWeapons; // 고객과 대여 아이템 매핑
+    List<DayResult> dayResults; // 오늘의 결과 리스트
     [Header("Tax Settings")]
-    public int taxAmount = 2000;
-    int taxInterval = 7;
+    public int taxAmount = 2000; // 세금 
+    int taxInterval = 7; // 세금 주기
     [Header("Unlock Settings")]
-    public int blacksmithUnlockGold = 5000;
-    public int heroUnlockGold = 8000;
+    public int blacksmithUnlockGold = 5000; // 대장장이 해금 금액
+    public int heroUnlockGold = 8000; // 용사 제작 해금 금액
     [HideInInspector] public bool isBlacksmithUnlocked = false;
     [HideInInspector] public bool isHeroSystemUnlocked = false;
 
@@ -32,17 +45,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        // 예시: 테스트용 초기 인벤토리
         Invoke("GetTestWeapon", 0.1f);
-        StartMorning();
+        StartMorning(); // 아침 시작
     }
 
     void GetTestWeapon()
     {
-        foreach (WeaponData weapon in testStartWeapons)
-            InventoryManager.Instance.AddWeapon(weapon, Random.Range(1, 4));
+        foreach (WeaponData Weapon in testStartWeapons)
+            InventoryManager.Instance.AddWeapon(Weapon, Random.Range(1, 4));
     }
 
-    public bool SpendGold(int amount)
+    public bool SpendGold(int amount) // 골드 소비
     {
         if (gold < amount)
         {
@@ -54,7 +68,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    public void AddGold(int amount)
+    public void AddGold(int amount) // 골드 획득
     {
         gold += amount;
         CommonUI.Instance.UpdateGold(gold);
@@ -68,11 +82,13 @@ public class GameManager : MonoBehaviour
             case DayPhase.Day:     StartNight(); break;
             case DayPhase.Night:
             {
+                // 세금 체크
                 if (currentDay % taxInterval == 0)
                 {
                     if (!SpendGold(taxAmount))
                     {
                         CommonUI.Instance.DisplayResult($"<color=red>월세 미납! 게임 오버</color>");
+                        // TODO: 게임오버 처리 (리셋하거나 종료)
                         return;
                     }
                     CommonUI.Instance.DisplayResult($"<color=yellow>월세 {taxAmount}G 납부 완료</color>");
@@ -80,49 +96,133 @@ public class GameManager : MonoBehaviour
                 currentDay++;
                 StartMorning();
                 break;
-            }
+            }    
         }
 
         CommonUI.Instance.UpdatePhase(currentDay, currentPhase);
         CommonUI.Instance.UpdateInventoryUI();
     }
 
-    void StartMorning()
+    void StartMorning() // 아침 시작
     {
         currentPhase = DayPhase.Morning;
+        // 초기화
+        todayCustomers = new List<Customer>();
+        assignedWeapons   = new Dictionary<Customer, WeaponData>();
+        dayResults      = new List<DayResult>();
+        // 상점 무기 생성
         WeaponShopManager.Instance.GenerateStock();
         UIManager.Instance.morningUI.GenerateWeaponShop();
         UIManager.Instance.morningUI.ShowMorningUI();
     }
 
-    void StartDay()
+    void StartDay() // 낮 시작
     {
         currentPhase = DayPhase.Day;
-        CustomerManager.Instance.SpawnCustomer();
+        // 고객 생성
+        for (int i = 0; i < customersPerDay; i++)
+            todayCustomers.Add(GenerateCustomer());
+
+        UIManager.Instance.dayUI.ShowDayUI(todayCustomers);
     }
 
-    void StartNight()
+    void StartNight() // 밤 시작
     {
         currentPhase = DayPhase.Night;
-        CustomerManager.Instance.Result();
-        CustomerManager.Instance.InitCustomer();
+        // 결과
+        foreach (Customer c in todayCustomers)
+        {
+            WeaponData Weapon = assignedWeapons.ContainsKey(c) 
+                            ? assignedWeapons[c] 
+                            : null;
+            DayResult result = SimulateRun(c, Weapon);
+            dayResults.Add(result);
+        }
+        UIManager.Instance.nightUI.ShowNightUI(dayResults);
     }
 
-    public void PurchaseHeroSystemUnlock()
+    Customer GenerateCustomer() // 고객 생성
+    {
+        Customer customer = new Customer();
+        customer.name = customerNamePool[Random.Range(0, customerNamePool.Count)];
+        customer.desc = customerDescPool[Random.Range(0, customerDescPool.Count)];
+        customer.level = SetCustomerLevel();
+        customer.grade = SetCustomerGrade();
+        customer.element = (Element)Random.Range(0, System.Enum.GetValues(typeof(Element)).Length);
+        customer.icon = iconPool[Random.Range(0, iconPool.Count)];
+
+        return customer;
+    }
+
+    int SetCustomerLevel() // 고객 레벨은 ±1~2 범위에서 조절
+    {
+        return Mathf.Clamp(playerLevel + Random.Range(-1, 2), 1, 99);
+    }
+
+    Grade SetCustomerGrade() // 고객 등급은 ±1~2 범위에서 조절
+    {
+        switch(playerLevel) {
+            case 1:
+                return Grade.Common;
+            case 2:
+                return Grade.Uncommon;
+            case 3:
+                return Grade.Rare;
+            case 4:
+                return Grade.Epic;
+            case 5:
+                return Grade.Legendary;
+            default:
+                return Grade.Common;
+        }
+    }
+
+    DayResult SimulateRun(Customer c, WeaponData Weapon) // 모험 시뮬레이션
+    {
+        float baseRate = Weapon == null ? 0 : 0.5f + (c.level - playerLevel)*0.05f;
+
+        bool isSuccess = Random.value < Mathf.Clamp01(baseRate);
+        int reward = isSuccess ? 300 : 0;
+
+        if (isSuccess) AddGold(reward); // 보상
+
+        return new DayResult { customer = c, weapon = Weapon, isSuccess = isSuccess, reward = reward };
+    }
+
+    public bool TryAssignWeapon(WeaponData Weapon)
+    { // 아이템 대여 가능 여부 확인
+        return InventoryManager.Instance.GetWeaponQuantity(Weapon) != 0;
+    }
+    
+    public void AssignWeapon(Customer c, WeaponData Weapon)
+    { // 아이템 대여
+        assignedWeapons[c] = Weapon;
+        InventoryManager.Instance.UseWeapon(Weapon);
+    }
+
+    public void PurchaseHeroSystemUnlock() // 용사 시스템 해금
     {
         if (!SpendGold(heroUnlockGold)) return;
         isHeroSystemUnlocked = true;
+
         CommonUI.Instance.DisplayResult("용사 제작 시스템이 해금되었습니다!");
         UIManager.Instance.dayUI.heroUnlockButton.gameObject.SetActive(false);
+
+        // 이제 “영웅” 메뉴 버튼도 활성화
         UIManager.Instance.dayUI.OnHeroSystemUnlocked();
     }
 
-    public void PurchaseBlacksmithSystemUnlock()
+    public void PurchaseBlacksmithSystemUnlock() // 대장장이 시스템 해금
     {
         if (!SpendGold(blacksmithUnlockGold)) return;
+        
         isBlacksmithUnlocked = true;
+
         CommonUI.Instance.DisplayResult("대장장이 시스템이 해금되었습니다!");
         UIManager.Instance.morningUI.blacksmithUnlockButton.gameObject.SetActive(false);
-        UIManager.Instance.morningUI.OnBlacksmithUnlocked();
+
+        // 이제 “대장장이” 메뉴 버튼도 활성화
+        UIManager.Instance.morningUI.OnBlacksmithUnlocked();    
     }
 }
+

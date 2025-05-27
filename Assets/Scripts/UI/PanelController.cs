@@ -3,21 +3,20 @@ using UnityEngine;
 public class PanelController : MonoBehaviour
 {
     [Header("Panels")]
-    public MorningUI morningUI;
-    public DayUI dayUI;
-    public NightUI nightUI;
-
-    public GameObject morningPanel;
-    public GameObject dayPanel;
-    public GameObject nightPanel;
-    public GameObject heroRosterPanel;
-    public GameObject blacksmithMenuPanel;
-    public GameObject blacksmithForgePanel;
-    public GameObject blacksmithRecipePanel;
-    public GameObject weaponShopPanel;
-    public GameObject heroMenuPanel;
-    public GameObject heroCreationPanel;
-    public GameObject weaponSelectionPanel;
+    MorningUI morningUI;
+    DayUI dayUI;
+    NightUI nightUI;
+    GameObject morningPanel;
+    GameObject dayPanel;
+    GameObject nightPanel;
+    GameObject heroRosterPanel;
+    GameObject blacksmithMenuPanel;
+    GameObject blacksmithForgePanel;
+    GameObject blacksmithRecipePanel;
+    GameObject WeaponShopPanel;
+    GameObject heroMenuPanel;
+    GameObject heroCreationPanel;
+    GameObject WeaponSelectionPanel;
 
     public void BindUI()
     {
@@ -29,14 +28,16 @@ public class PanelController : MonoBehaviour
         dayPanel = dayUI.gameObject;
         nightPanel = nightUI.gameObject;
 
+
         blacksmithMenuPanel = morningUI.blacksmithMenuPanel;
         blacksmithForgePanel = morningUI.blacksmithForgePanel;
         blacksmithRecipePanel = morningUI.blacksmithRecipePanel;
-        weaponShopPanel = morningUI.weaponShopPanel;
+        WeaponShopPanel = morningUI.weaponShopPanel;
         heroRosterPanel = dayUI.heroRosterPanel;
         heroMenuPanel = dayUI.heroMenuPanel;
         heroCreationPanel = dayUI.heroCreationPanel;
-        weaponSelectionPanel = dayUI.weaponSelectionPanel;
+        WeaponSelectionPanel = dayUI.WeaponSelectionPanel;
+       
     }
 
     public void InitUI()
@@ -44,58 +45,72 @@ public class PanelController : MonoBehaviour
         heroMenuPanel.SetActive(false);
         heroCreationPanel.SetActive(false);
         heroRosterPanel.SetActive(false);
-        weaponShopPanel.SetActive(false);
+        WeaponShopPanel.SetActive(false);
         blacksmithMenuPanel.SetActive(false);
         blacksmithForgePanel.SetActive(false);
         blacksmithRecipePanel.SetActive(false);
-        weaponSelectionPanel.SetActive(false);
+        WeaponSelectionPanel.SetActive(false);
     }
 
     public void ShowMorningUI()
     {
         HideAllPanels();
         morningPanel.SetActive(true);
+        dayPanel.SetActive(false);
+        nightPanel.SetActive(false);
     }
+
     public void ShowDayUI()
     {
         HideAllPanels();
+        morningPanel.SetActive(false);
         dayPanel.SetActive(true);
+        nightPanel.SetActive(false);
     }
+
     public void ShowNightUI()
     {
         HideAllPanels();
+        morningPanel.SetActive(false);
+        dayPanel.SetActive(false);
         nightPanel.SetActive(true);
     }
+
     public void ShowBlacksmithForgePanel()
     {
         HideAllPanels();
         blacksmithRecipePanel.SetActive(true);
         blacksmithForgePanel.SetActive(true);
     }
+
     public void ShowBlacksmithRecipePanel()
     {
         HideAllPanels();
         blacksmithRecipePanel.SetActive(true);
     }
+
     public void ShowHeroCreationPanel()
     {
         HideAllPanels();
         heroCreationPanel.SetActive(true);
     }
+
     public void ShowHeroRosterPanel()
     {
         HideAllPanels();
         heroRosterPanel.SetActive(true);
     }
+
     public void ShowWeaponSelectionPanel()
     {
         HideAllPanels();
-        weaponSelectionPanel.SetActive(true);
+        WeaponSelectionPanel.SetActive(true);
     }
+
     public void ShowWeaponShopPanel()
     {
         HideAllPanels();
-        weaponShopPanel.SetActive(true);
+        WeaponShopPanel.SetActive(true);
     }
 
     void HideAllPanels()
@@ -104,9 +119,9 @@ public class PanelController : MonoBehaviour
         blacksmithMenuPanel.SetActive(false);
         blacksmithForgePanel.SetActive(false);
         blacksmithRecipePanel.SetActive(false);
-        weaponShopPanel.SetActive(false);
+        WeaponShopPanel.SetActive(false);
         heroMenuPanel.SetActive(false);
         heroCreationPanel.SetActive(false);
-        weaponSelectionPanel.SetActive(false);
+        WeaponSelectionPanel.SetActive(false);
     }
 }

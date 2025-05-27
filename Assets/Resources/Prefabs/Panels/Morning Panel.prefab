@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 587142324605684973}
   - component: {fileID: 2434780732414003508}
   m_Layer: 5
-  m_Name: Close Button
+  m_Name: Cancel Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 7480185209640687010}
   - component: {fileID: 7248195819434940813}
   m_Layer: 5
-  m_Name: Close Button
+  m_Name: Cancel Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1597,15 +1597,15 @@ MonoBehaviour:
   blacksmithUnlockText: {fileID: 8257036910268405904}
   blacksmithForgePanel: {fileID: 4702847685746294968}
   forgeButtonParent: {fileID: 6116794379053615830}
-  blacksmithForgeCloseButton: {fileID: 2434780732414003508}
+  blacksmithForgeCancelButton: {fileID: 2434780732414003508}
   forgeButtonPrefab: {fileID: 4346354833708648340, guid: 95e8102c76db9dd4a8dfb36ee789ef8b, type: 3}
   blacksmithRecipePanel: {fileID: 4628520015050964664}
-  blacksmithRecipeCloseButton: {fileID: 8350675381517195438}
+  blacksmithRecipeCancelButton: {fileID: 8350675381517195438}
   weaponShopPanel: {fileID: 7056916154194829791}
   weaponShopButtonParent: {fileID: 2934111617651784661}
   weaponShopButtonPrefab: {fileID: 4346354833708648340, guid: 5f68ee7c3fdaf1e42b0ef8e0ef8a51f3, type: 3}
   weaponShopButton: {fileID: 2908374648911789948}
-  weaponShopCloseButton: {fileID: 7248195819434940813}
+  weaponShopCancelButton: {fileID: 7248195819434940813}
 --- !u!1 &7252500713825811414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,7 +1874,7 @@ GameObject:
   - component: {fileID: 5328161165300887249}
   - component: {fileID: 8350675381517195438}
   m_Layer: 5
-  m_Name: Close Button
+  m_Name: Cancel Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

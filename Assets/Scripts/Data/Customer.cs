@@ -1,7 +1,6 @@
 using UnityEngine;
 
-[System.Serializable]
-public class CustomerData
+public class Customer
 {
     public string name;// 고객 이름
     public string desc; // 고객 설명

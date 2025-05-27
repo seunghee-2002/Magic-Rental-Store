@@ -826,66 +826,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &930661744
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 930661746}
-  - component: {fileID: 930661745}
-  m_Layer: 0
-  m_Name: Customer Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &930661745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 930661744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a49aa98add4dd04884a3f481bdf45f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customerNamePool:
-  - "\uC5D0\uB9B0"
-  - "\uBC14\uCE20"
-  - "\uC138\uB9AC\uC544"
-  - "\uB2D0\uC2A4"
-  - "\uB8E8\uC5D0\uB9B0"
-  customerDescPool:
-  - "\uD55C\uB54C \uC720\uBA85\uD588\uB358 \uBAA8\uD5D8\uAC00"
-  - "\uCD08\uBCF4 \uC5F0\uAE08\uC220\uC0AC"
-  - "\uB358\uC804\uC5D0\uC11C \uAE38 \uC783\uC740 \uC0DD\uC874\uC790"
-  iconPool:
-  - {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  todayCustomers: []
-  dayResults: []
---- !u!4 &930661746
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 930661744}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1029038270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,6 +1265,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 66c646d3685684e4598548d09bcfe7ed, type: 2}
   - {fileID: 11400000, guid: 7ccca7f308cd0da4a9384fd78996f0e2, type: 2}
   - {fileID: 11400000, guid: a0d4f5f81a9bfbc41b063923864982fb, type: 2}
+  customerNamePool:
+  - "\uC5D0\uB9B0"
+  - "\uBC14\uCE20"
+  - "\uC138\uB9AC\uC544"
+  - "\uB2D0\uC2A4"
+  - "\uB8E8\uC5D0\uB9B0"
+  customerDescPool:
+  - "\uD55C\uB54C \uC720\uBA85\uD588\uB358 \uBAA8\uD5D8\uAC00"
+  - "\uCD08\uBCF4 \uC5F0\uAE08\uC220\uC0AC"
+  - "\uB358\uC804\uC5D0\uC11C \uAE38 \uC783\uC740 \uC0DD\uC874\uC790"
+  iconPool:
+  - {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   playerLevel: 1
   gold: 1000
   currentDay: 1
@@ -1761,71 +1713,6 @@ MonoBehaviour:
   m_Spacing: {x: 30, y: 20}
   m_Constraint: 1
   m_ConstraintCount: 6
---- !u!1 &1753103527
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1753103529}
-  - component: {fileID: 1753103528}
-  m_Layer: 0
-  m_Name: Adventure Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1753103528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1753103527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1aca73604fa69a459daea579b3d27b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  commonDungeons:
-  - {fileID: 11400000, guid: 2ae7a10954954a64f8dc397f807a7321, type: 2}
-  - {fileID: 11400000, guid: caccf42670d21f54f94b1fd3429f95c5, type: 2}
-  - {fileID: 11400000, guid: d2f04fcefc0f7bb4bac2c6b63c9b4804, type: 2}
-  - {fileID: 11400000, guid: 8a2a6218b3a73c540b90a10278098a1a, type: 2}
-  uncommonDungeons:
-  - {fileID: 11400000, guid: 2a57634c5a1aad14db5212b94cbd6206, type: 2}
-  - {fileID: 11400000, guid: 32a257caad810c8488bca425f9021a7d, type: 2}
-  - {fileID: 11400000, guid: b48cb612a8158cf4bbba640bd6df435e, type: 2}
-  rareDungeons:
-  - {fileID: 11400000, guid: d3b9d05c93c585544b125298117ca4bb, type: 2}
-  - {fileID: 11400000, guid: e7fafa366c4ef474db8a0a0edb00bd93, type: 2}
-  - {fileID: 11400000, guid: 4db37058236d9db43ad005e7063ce306, type: 2}
-  epicDungeons:
-  - {fileID: 11400000, guid: f8e36587b0d0e344d8e9798144a6d1e2, type: 2}
-  - {fileID: 11400000, guid: 4233e8e93fa9ef247938b29ee80ab064, type: 2}
-  - {fileID: 11400000, guid: 9ac55b1e419dc174f846d89e97e55ad2, type: 2}
-  legendaryDungeons:
-  - {fileID: 11400000, guid: 00c4d829f26c7444c9ad8d5095994d61, type: 2}
-  - {fileID: 11400000, guid: 3db2c5c263c7f4e4387041d9f8cf9f8a, type: 2}
-  - {fileID: 11400000, guid: 9a22a6163d87ecd4d86a0559b6bb61ad, type: 2}
---- !u!4 &1753103529
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1753103527}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1984918470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,5 +1802,3 @@ SceneRoots:
   - {fileID: 1241929791}
   - {fileID: 1360604294}
   - {fileID: 1074472261}
-  - {fileID: 1753103529}
-  - {fileID: 930661746}

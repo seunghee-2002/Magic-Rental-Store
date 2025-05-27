@@ -5,11 +5,16 @@ using TMPro;
 
 public class ConfirmPopup : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI messageText; // 메시지 텍스트
-    [SerializeField] Button yesButton; // 예 버튼
-    [SerializeField] Button noButton; // 아니오 버튼
+    [SerializeField] TextMeshProUGUI messageText;
+    [SerializeField] Button yesButton;
+    [SerializeField] Button noButton;
 
-    // 팝업 초기화
+    /// <summary>
+    /// 팝업 세팅
+    /// </summary>
+    /// <param name="message">보여줄 메시지</param>
+    /// <param name="onYes">예를 눌렀을 때 실행될 콜백</param>
+    /// <param name="onNo">아니오를 눌렀을 때 실행될 콜백</param>
     public void Setup(string message, UnityAction onYes, UnityAction onNo)
     {
         messageText.text = message;
@@ -31,7 +36,6 @@ public class ConfirmPopup : MonoBehaviour
         });
     }
 
-    // 팝업 닫기
     void Close()
     {
         gameObject.SetActive(false);

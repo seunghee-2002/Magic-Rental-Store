@@ -4,10 +4,13 @@ using TMPro;
 
 public class MessagePopup : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI messageText; // 메시지 텍스트
-    [SerializeField] Button okButton; // 확인 버튼
+    [SerializeField] TextMeshProUGUI messageText;
+    [SerializeField] Button okButton;
 
-    // 팝업 초기화
+    /// <summary>
+    /// 메시지 팝업 세팅
+    /// </summary>
+    /// <param name="message">보여줄 메시지</param>
     public void Setup(string message)
     {
         messageText.text = message;
@@ -18,7 +21,6 @@ public class MessagePopup : MonoBehaviour
         });
     }
 
-    // 팝업 닫기
     void Close()
     {
         gameObject.SetActive(false);
