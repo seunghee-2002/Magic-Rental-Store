@@ -39,6 +39,6 @@ public class ConfirmPopup : MonoBehaviour
     void Close()
     {
         gameObject.SetActive(false);
-        CommonUI.Instance.overlayBlocker.SetActive(false);
+        UIManager.Instance.overlayBlocker.SetActive(false);
     }
 }

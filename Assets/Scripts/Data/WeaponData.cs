@@ -1,8 +1,5 @@
 using UnityEngine;
 
-public enum Grade { Common, Uncommon, Rare, Epic, Legendary } // 도구 등급 
-public enum Element { Fire, Water, Earth, Air, Lightning, Ice, Light, Dark,} // 도구 속성
-
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Data/Weapon")]
 public class WeaponData : ScriptableObject
 {

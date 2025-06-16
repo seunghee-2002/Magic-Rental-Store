@@ -18,7 +18,7 @@ public class InventoryManager : MonoBehaviour
         WeaponInstance existing = weaponInventory.Find(i => i.data == data);
         if (existing != null) existing.quantity += amount;
         else weaponInventory.Add(new WeaponInstance(data, amount));
-        CommonUI.Instance.UpdateInventoryUI();
+        UpdateInventoryUI();
     }
 
     public bool UseWeapon(WeaponData data) // 도구 사용 & 여부 확인
@@ -27,7 +27,7 @@ public class InventoryManager : MonoBehaviour
         if (instance != null && instance.quantity > 0)
         {
             instance.quantity--;
-            CommonUI.Instance.UpdateInventoryUI();
+            UpdateInventoryUI();
             return true;
         }
         return false;
@@ -42,5 +42,21 @@ public class InventoryManager : MonoBehaviour
     public List<WeaponInstance> GetWeaponInventory() // 무기 인벤토리 확인
     {
         return weaponInventory;
+    }
+
+    private void UpdateInventoryUI()
+    {
+        switch (GameManager.Instance.currentPhase)
+        {
+            case DayPhase.Morning:
+                UIManager.Instance.MorningView.UpdateInventoryUI();
+                break;
+            case DayPhase.Day:
+                UIManager.Instance.DayView.UpdateInventoryUI();
+                break;
+            case DayPhase.Night:
+                UIManager.Instance.NightView.UpdateInventoryUI();
+                break;
+        }
     }
 }
