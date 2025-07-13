@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 338f7192d91b18d4d97941e2044d4770, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: 
+  startingGold: 5000
+  dayDuration: 300
+  blacksmithUnlockDay: 3
+  weaponShopItemCount: 5
+  weaponShopRefreshCost: 1000
+  customerMaxLevel: 100
+  heroInjuryDays: 10
+  heroMaxLevel: 100
+  maxHeroCount: 50
+  heroUnlockDays: 0a000000140000001e0000002800000032000000
+  heroGoldMultiplier: 1.5
+  heroGoldPenaltyPerDay: 50
+  heroBaseInjuryDays: 5
+  heroMinInjuryDays: 1
+  heroMaxInjuryDays: 15
+  heroBaseConversionRates:
+  - 5
+  - 4
+  - 3
+  - 2
+  - 1
+  weaponGradeBonuses:
+  - -30
+  - 0
+  - 20
+  - 50
+  - 100
+  dungeonGradeBonuses:
+  - -20
+  - 0
+  - 20
+  - 50
+  - 100
+  rentPaymentDay: 7
+  rentMultiplier: 100
+  showRentWarning: 1
+  weaponSellRate: 0.5
+  inventoryMaxSize: 100
+  dailyCustomerCount: 6
+  uiPageSize: 8
+  dailyEventRewards: f401000018fcffff000000000000000000000000
+  gradeSpawnRates:
+  - 0.75
+  - 0.14
+  - 0.07
+  - 0.03
+  - 0.01
+  maxSimultaneousCrafting: 5
+  craftingSpeedMultiplier: 1
