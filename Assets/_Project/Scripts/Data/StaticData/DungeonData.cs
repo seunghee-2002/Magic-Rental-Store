@@ -32,7 +32,7 @@ namespace MagicRentalShop.Data
         [Tooltip("던전 기본 보상")]
         public int baseGoldReward;
 
-        [Tooltip("획득 가능한 재료 목록")]
-        public List<MaterialData> materials;
+        [Tooltip("이 던전에서 획득 가능한 재료 ID 목록")]
+        public List<string> dropMaterialIDs = new List<string>();
     }
 }

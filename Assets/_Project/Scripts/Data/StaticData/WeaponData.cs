@@ -30,6 +30,7 @@ namespace MagicRentalShop.Data
         public Sprite icon;
 
         [Header("경제")]
-        public int basePrice;                // 기본 가격 
+        [Tooltip("기본 가격")]
+        public int basePrice;
     }
 }
