@@ -106,11 +106,9 @@ _이 체크리스트는 MVC 4계층(Data, Model, View, Controller)에 속한 모
 
 **HeroCollectionInfoPanel.cs**: `heroName`, `description`, `grade`, `element`, `currentLevelText`, `acquiredLevelText`, `specialAbility`
 
-**HeroListPanel.cs**: `heroListContent`, `pageNavigation` (CustomerListPanel과 동일한 구조)
+**HeroListPanel.cs**: `heroListContent`, `pageNavigation` 
 
-**HeroButton.cs**: `heroIcon`, `level`, `isInjured: bool`, `recoveryDays: int`, `isLocked: bool`, `lockOverlay`
-
-**HeroTreatmentPanel.cs**: `heroNameText`, `injuryInfoText`, `treatmentCostText`, `treatmentDaysText`, `treatButton`, `cancelButton`
+**HeroButton.cs**: `heroIcon`, `isInjured: bool`, `recoveryDays: int`
 
 ### 3.4. 밤(Night) 뷰
 **NightView.cs**: `adventurePanelRoot`, `resultPanelRoot`, `nextDayButton`
@@ -173,7 +171,7 @@ _이 체크리스트는 MVC 4계층(Data, Model, View, Controller)에 속한 모
 
 **HeroManager.cs**:
 - **변수**: `ownedHeroes: List<HeroInstance>`, `injuredHeroes: List<InjuredHeroData>`, `heroCollection: Dictionary<string, HeroCollectionData>`
-- **메서드**: `AddHero()`, `GetAvailableHeroes()`, `GetAvailableHeroesByDay()`, `InjureHero()`, `ProcessRecovery()`, `IsHeroAcquired()`, `GetHeroCollectionStatus()`, `LevelUpHero()`, `IsHeroUnlocked()`
+- **메서드**: `AddHero()`, `GetAvailableHeroes()`, `GetAvailableHeroesByDay()`, `InjureHero()`, `ProcessRecovery()`, `IsHeroAcquired()`, `GetHeroCollectionStatus()`
 
 **WeaponShopController.cs**:
 - **변수**: `shopItemPool: List<WeaponData>`, `currentShopItems: List<WeaponData>`, `purchasedItems: List<string>`
@@ -189,7 +187,7 @@ _이 체크리스트는 MVC 4계층(Data, Model, View, Controller)에 속한 모
 **PersistenceController.cs**:
 - **메서드**: `SaveGame()`, `LoadGame()`, `SaveHeroData()`, `LoadHeroData()`, `SaveHeroInheritance()`, `LoadHeroInheritance()`
 
-### 4.4. 계산 시스템 (새로 추가)
+### 4.4. 계산 시스템
 **SuccessRateCalculator.cs**:
 - **메서드**: `CalculateBaseRate()`, `CalculateElementBonus()`, `CalculateGradeBonus()` (Customer/Hero 분기), `CalculateFinalRate()`
 
@@ -202,11 +200,8 @@ _이 체크리스트는 MVC 4계층(Data, Model, View, Controller)에 속한 모
 **HeroRewardCalculator.cs**:
 - **메서드**: `CalculateHeroGoldReward()`, `CalculateAdditionalLevelUp()`, `RollLevelUpBonus()`
 
-**HeroPenaltyCalculator.cs**:
-- **메서드**: `CalculateInjuryDuration()`, `CalculateTreatmentCost()`
-
 **HeroManager.cs**:
-- **메서드**: `TreatInjuredHero()`, `CanTreatHero()`, `GetTreatmentCost()`, `IsHeroPermanentlyInjured()`
+- **메서드**: `CalculateInjuryDuration()`
 
 ---
 

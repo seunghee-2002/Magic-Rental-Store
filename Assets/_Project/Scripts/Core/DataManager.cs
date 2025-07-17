@@ -11,6 +11,8 @@ namespace MagicRentalShop.Core
     /// </summary>
     public class DataManager : MonoBehaviour
     {
+        [Header("데이터 컨테이너")]
+        [SerializeField] private GameDataContainer dataContainer;
         [Header("로드된 데이터 상태")]
         [SerializeField] private bool isInitialized = false;
         [SerializeField] private int totalLoadedAssets = 0;
@@ -85,17 +87,12 @@ namespace MagicRentalShop.Core
         
         private void LoadWeaponData()
         {
-            var weapons = Resources.LoadAll<WeaponData>("StaticData/Weapons");
-            foreach (var weapon in weapons)
+            foreach (var weapon in dataContainer.weaponDatas)
             {
                 if (!string.IsNullOrEmpty(weapon.id))
                 {
                     weaponDatas[weapon.id] = weapon;
                     totalLoadedAssets++;
-                }
-                else
-                {
-                    Debug.LogWarning($"WeaponData with empty ID found: {weapon.name}");
                 }
             }
             Debug.Log($"무기 데이터 로드 완료: {weaponDatas.Count}개");
@@ -103,17 +100,12 @@ namespace MagicRentalShop.Core
         
         private void LoadCustomerData()
         {
-            var customers = Resources.LoadAll<CustomerData>("StaticData/Customers");
-            foreach (var customer in customers)
+            foreach (var customer in dataContainer.customerDatas)
             {
                 if (!string.IsNullOrEmpty(customer.id))
                 {
                     customerDatas[customer.id] = customer;
                     totalLoadedAssets++;
-                }
-                else
-                {
-                    Debug.LogWarning($"CustomerData with empty ID found: {customer.name}");
                 }
             }
             Debug.Log($"고객 데이터 로드 완료: {customerDatas.Count}개");
@@ -121,17 +113,12 @@ namespace MagicRentalShop.Core
         
         private void LoadDungeonData()
         {
-            var dungeons = Resources.LoadAll<DungeonData>("StaticData/Dungeons");
-            foreach (var dungeon in dungeons)
+            foreach (var dungeon in dataContainer.dungeonDatas)
             {
                 if (!string.IsNullOrEmpty(dungeon.id))
                 {
                     dungeonDatas[dungeon.id] = dungeon;
                     totalLoadedAssets++;
-                }
-                else
-                {
-                    Debug.LogWarning($"DungeonData with empty ID found: {dungeon.name}");
                 }
             }
             Debug.Log($"던전 데이터 로드 완료: {dungeonDatas.Count}개");
@@ -139,17 +126,13 @@ namespace MagicRentalShop.Core
         
         private void LoadMaterialData()
         {
-            var materials = Resources.LoadAll<MaterialData>("StaticData/Materials");
-            foreach (var material in materials)
+            
+            foreach (var material in dataContainer.materialDatas)
             {
                 if (!string.IsNullOrEmpty(material.id))
                 {
                     materialDatas[material.id] = material;
                     totalLoadedAssets++;
-                }
-                else
-                {
-                    Debug.LogWarning($"MaterialData with empty ID found: {material.name}");
                 }
             }
             Debug.Log($"재료 데이터 로드 완료: {materialDatas.Count}개");
@@ -157,17 +140,12 @@ namespace MagicRentalShop.Core
         
         private void LoadRecipeData()
         {
-            var recipes = Resources.LoadAll<RecipeData>("StaticData/Recipes");
-            foreach (var recipe in recipes)
+            foreach (var recipe in dataContainer.recipeDatas)
             {
                 if (!string.IsNullOrEmpty(recipe.id))
                 {
                     recipeDatas[recipe.id] = recipe;
                     totalLoadedAssets++;
-                }
-                else
-                {
-                    Debug.LogWarning($"RecipeData with empty ID found: {recipe.name}");
                 }
             }
             Debug.Log($"레시피 데이터 로드 완료: {recipeDatas.Count}개");
@@ -175,17 +153,12 @@ namespace MagicRentalShop.Core
         
         private void LoadDailyEventData()
         {
-            var events = Resources.LoadAll<DailyEventData>("StaticData/Events");
-            foreach (var eventData in events)
+            foreach (var eventData in dataContainer.dailyEventDatas)
             {
                 if (!string.IsNullOrEmpty(eventData.id))
                 {
                     dailyEventDatas[eventData.id] = eventData;
                     totalLoadedAssets++;
-                }
-                else
-                {
-                    Debug.LogWarning($"DailyEventData with empty ID found: {eventData.name}");
                 }
             }
             Debug.Log($"일일 이벤트 데이터 로드 완료: {dailyEventDatas.Count}개");
@@ -299,10 +272,10 @@ namespace MagicRentalShop.Core
         
         #endregion
 
-        #region 전체 데이터 접근 메서드 (Hero 도감용)
+        #region 전체 데이터 접근 메서드
         
         /// <summary>
-        /// 모든 고객 데이터 반환 (Hero 도감 표시용)
+        /// 모든 고객 데이터 반환
         /// </summary>
         public List<CustomerData> GetAllCustomerData()
         {

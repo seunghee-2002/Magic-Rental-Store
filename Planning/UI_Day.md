@@ -183,8 +183,8 @@
 │       HeroCollection                │
 │          Button                     │
 │                                    │
-│         [Hero 모험]                 │
-│       HeroAdventure                 │
+│         [Hero 관리]                 │
+│       HeroList                     │
 │          Button                     │
 │                                    │
 ├─────────────────────────────────────┤
@@ -194,7 +194,7 @@
 
 #### 컴포넌트 정의
 - **heroCollectionButton: Button** (Hero 도감 버튼)
-- **heroAdventureButton: Button** (Hero 모험 보내기 버튼)
+- **heroAListButton: Button** (Hero 관리 버튼)
 - **closeButton: Button**
 
 ### 3.2. HeroCollectionPanel (Hero 도감)
@@ -248,17 +248,10 @@
 └─────────────────────────────────────┘
 ```
 
-### 3.4. HeroListPanel (Hero 모험 보내기)
+### 3.4. HeroListPanel
 
 #### 구조
-**※ CustomerListPanel과 완전히 동일한 구조**
-- **HeroButton** (CustomerButton과 동일)
-- **HeroInfoPanel** (CustomerInfoPanel과 동일)
-- **HeroDungeonInfoPanel** (CustomerDungeonInfoPanel과 동일)
-- **무기 선택 시스템** (동일)
-
-#### 차이점
-- **보유 Hero만 표시**: 획득한 Hero들만 목록에 표시
+- **보유한 Hero의 상태를 볼 수 있는 Panel**
 - **부상 상태 표시**: 실패 후 10일간 비활성화된 Hero는 회색 처리, 클릭 불가
 - **부상 Hero 표시**: "부상 회복까지 X일 남음" 텍스트 표시
 
@@ -267,70 +260,19 @@
 부상 상태 Hero 표시:
 ┌─────────────────────┐
 │  [Hero 아이콘] [X]   │ ← 회색 처리 + X 표시
-│   치료비: 1,250골드   │ ← 치료비 표시 추가
+│                     │
 │                    │
 └─────────────────────┘
-
-클릭 시 → HeroTreatmentPanel 호출
 ```
-
-### 3.5. HeroTreatmentPanel (Hero 치료 확인 팝업)
-
-#### 표시 정보
-- **heroName: string** (Hero 이름)
-- **injuryInfo: string** (부상 정보)
-- **treatmentCost: int** (치료비)
-- **treatmentDays: int** (예상 치료 기간)
-- **treatButton: Button** (치료 확인)
-- **cancelButton: Button** (치료 취소)
-
-#### UI 레이아웃
-```
-┌─────────────────────────────────────┐
-│             Hero 치료               │
-├─────────────────────────────────────┤
-│ Hero: 용감한 기사                   │
-│ 부상 상태: 중상                     │
-│                                    │
-│ 치료비: 1,250골드                   │
-│ 예상 치료 기간: 8일                 │
-│                                    │
-│ 치료하시겠습니까?                   │
-├─────────────────────────────────────┤
-│        [치료]      [취소]           │
-└─────────────────────────────────────┘
-```
-
-#### 클릭 이벤트
-- **treatButton 클릭** → 골드 지불, 치료 시작
-- **cancelButton 클릭** → 팝업 닫기, 부상 상태 유지
-
----
 
 ## 4. Hero 전환 시스템
 
-### 4.1. Hero 잠금해제 시스템
-**잠금해제 조건**:
-- Common Hero: 10일차부터 사용 가능
-- Uncommon Hero: 20일차부터 사용 가능  
-- Rare Hero: 30일차부터 사용 가능
-- Epic Hero: 40일차부터 사용 가능
-- Legendary Hero: 50일차부터 사용 가능
-
-**잠금된 Hero 표시**:
-잠금 상태 Hero 표시:
-┌─────────────────────┐
-│  [Hero 아이콘]       │ ← 회색 처리
-│    (잠금됨)         │
-│ X일차에 해금됩니다    │
-└─────────────────────┘
-
-### 4.2. Hero 전환 시 처리
+### 4.1. Hero 전환 시 처리
 - **Customer 풀에서 제거**: 더 이상 일반 고객으로 등장하지 않음
-- **Hero 풀에 추가**: HeroListPanel에서 사용 가능
+- **Hero 풀에 추가**: HeroListPanel에서 확인 가능
 - **도감 업데이트**: HeroCollectionPanel에서 그림자 → 실제 아이콘으로 변경
 
-### 4.3. Hero 전용 능력
+### 4.2. Hero 전용 능력
 
 #### 성공률 계산 시 등급보정 (Hero 전용)
 ```
@@ -354,7 +296,7 @@ Legendary: 20% 회수 (+10%) |  80% 손실 (-10%)
 
 #### 실패 패널티
 - **일반 고객**: 실패 시 사라짐 (사망)
-- **Hero**: 실패 시 10일간 모험 불가 (부상 상태)
+- **Hero**: 실패 시 몇일간 모험 불가 (부상 상태)
 
 ---
 
@@ -381,22 +323,13 @@ DayView
                     → 획득한 Hero 클릭 → HeroCollectionInfoPanel
 ```
 
-### 5.3. Hero 모험 보내기 플로우
-```
-DayView 
-    → heroMenuButton 클릭 
-        → HeroMenuPanel 
-            → heroAdventureButton 클릭 
-                → HeroListPanel (CustomerListPanel과 동일한 플로우)
-```
-
 ---
 
 ## 6. 구현 시 고려사항
 
 ### 6.1. 상태 관리
 - **모험 예약 상태**: 무기 장착된 고객들을 별도 리스트로 관리
-- **Hero 상태**: 활성/부상 상태, 부상 회복 날짜 관리
+- **Hero 상태**: 부상 회복 날짜 관리
 - **도감 상태**: 획득한 Hero 목록 저장
 
 ### 6.2. 데이터 동기화

@@ -21,7 +21,6 @@ namespace MagicRentalShop.Systems
         
         [Header("레벨 계산 설정")]
         [SerializeField] private float baseLevelMultiplier = 0.2f; // 일수당 레벨 증가율
-        [SerializeField] private int[] gradeLevelBonus = {0, 2, 5, 10, 20}; // 등급별 레벨 보너스
 
         // 싱글톤 패턴
         public static CustomerManager Instance { get; private set; }
@@ -146,11 +145,8 @@ namespace MagicRentalShop.Systems
             // 기본 레벨 = 일수 × 0.2
             float baseLevel = currentDay * baseLevelMultiplier;
             
-            // 등급별 보너스 추가
-            int gradeBonus = gradeLevelBonus[(int)customerGrade];
-            
             // 최종 레벨 계산 (최소 1레벨)
-            int finalLevel = Mathf.Max(1, Mathf.RoundToInt(baseLevel) + gradeBonus);
+            int finalLevel = Mathf.Max(1, Mathf.RoundToInt(baseLevel));
             
             // 최대 레벨 제한
             int maxLevel = gameConfig?.customerMaxLevel ?? 100;
@@ -222,6 +218,21 @@ namespace MagicRentalShop.Systems
             
             visitingCustomers.Remove(customer);
             Debug.Log($"Removed customer {customer.GetDisplayName()} from pool (converted to Hero)");
+        }
+
+        /// <summary>
+        /// 특정 등급의 방문 가능한 Hero들 반환
+        /// </summary>
+        private List<CustomerInstance> GetAvailableHeroesOfGrade(Grade grade, int currentDay, PlayerData playerData)
+        {
+            // PlayerData에서 Hero 목록을 가져옴
+            var allHeroesOfGrade = playerData.visitingCustomers.Where(c => 
+                c.IsHero(playerData) && 
+                dataManager.GetCustomerData(c.staticDataID)?.grade == grade
+            ).ToList();
+            
+            // InjuryManager를 통해 방문 가능한 Hero들만 필터링
+            return InjuryManager.Instance.FilterAvailableHeroes(allHeroesOfGrade, currentDay, playerData);
         }
 
         /// <summary>

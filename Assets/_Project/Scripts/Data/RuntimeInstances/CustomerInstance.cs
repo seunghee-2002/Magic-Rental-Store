@@ -25,6 +25,13 @@ namespace MagicRentalShop.Data
         [Tooltip("고객에게 배정된 던전")]
         public DungeonData assignedDungeon;
 
+        [Header("Hero 시스템")]
+        [Tooltip("Hero 상태 여부")]
+        public bool isHero = false;
+        
+        [Tooltip("Hero로 전환된 날짜")]
+        public int heroConvertedDay = 0;
+
         /// <summary>
         /// 생성자 - CustomerData로부터 인스턴스 생성
         /// </summary>
@@ -46,11 +53,30 @@ namespace MagicRentalShop.Data
         }
 
         /// <summary>
+        /// Customer를 Hero로 전환
+        /// </summary>
+        public void ConvertToHero(int currentDay)
+        {
+            isHero = true;
+            heroConvertedDay = currentDay;
+            Debug.Log($"{GetDisplayName()} converted to Hero on day {currentDay}!");
+        }
+
+        /// <summary>
+        /// Hero 상태인지 확인
+        /// </summary>
+        public bool IsHero()
+        {
+            return isHero;
+        }
+
+        /// <summary>
         /// 고객 이름 반환
         /// </summary>
         public string GetDisplayName()
         {
-            return data?.customerName ?? "Unknown Customer";
+            string baseName = data?.customerName ?? "Unknown Customer";
+            return isHero ? $"{baseName}★" : baseName;
         }
         
         /// <summary>
@@ -125,7 +151,10 @@ namespace MagicRentalShop.Data
         public string instanceID;        // 인스턴스 고유 ID
         public int level;                // 고객 레벨
         public string assignedDungeonID; // 배정된 던전 ID
-        
+
+        public bool isHero;             // Hero 상태 여부   
+        public int heroConvertedDay;    // Hero로 전환된 날
+
         /// <summary>
         /// CustomerInstance에서 저장 데이터 생성
         /// </summary>
@@ -135,6 +164,9 @@ namespace MagicRentalShop.Data
             instanceID = customer.instanceID;
             level = customer.level;
             assignedDungeonID = customer.assignedDungeon?.id ?? "";
+
+            isHero = customer.isHero;
+            heroConvertedDay = customer.heroConvertedDay;
         }
         
         /// <summary>
@@ -153,7 +185,9 @@ namespace MagicRentalShop.Data
                 data = customerData,
                 instanceID = instanceID,
                 level = level,
-                assignedDungeon = dungeonData
+                assignedDungeon = dungeonData,
+                isHero = isHero,
+                heroConvertedDay = heroConvertedDay
             };
             
             return customer;

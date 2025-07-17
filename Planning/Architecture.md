@@ -61,8 +61,7 @@ Assets/
     │       │   │   ├── DayView.prefab
     │       │   │   ├── CustomerInfoPanel.prefab
     │       │   │   ├── HeroMenuPanel.prefab
-    │       │   │   ├── HeroCollectionPanel.prefab
-    │       │   │   └── HeroListPanel.prefab
+    │       │   │   └── HeroCollectionPanel.prefab
     │       │   └── Night/              # 밤 페이즈 UI
     │       │       ├── NightView.prefab
     │       │       ├── AdventureInfoPanel.prefab
@@ -90,7 +89,7 @@ Assets/
         │   │   ├── MaterialInstance.cs
         │   │   ├── CustomerInstance.cs
         │   │   ├── HeroInstance.cs     # Hero 인스턴스
-        │   │   ├── HeroCollectionData.cs # Hero 도감 데이터 (신규)
+        │   │   ├── HeroCollectionData.cs # Hero 도감 데이터
         │   │   ├── InjuredHeroData.cs  # Hero 부상 데이터
         │   │   ├── AdventureInstance.cs
         │   │   ├── CraftingInstance.cs # 제작 진행 데이터
@@ -100,7 +99,7 @@ Assets/
         │       ├── WeaponData.cs
         │       ├── CustomerData.cs
         │       ├── DungeonData.cs
-        │       ├── MaterialData.cs     # 확장: availableDungeonIDs 포함
+        │       ├── MaterialData.cs 
         │       ├── RecipeData.cs
         │       └── DailyEventData.cs
         │
@@ -109,14 +108,14 @@ Assets/
             │   ├── AdventureController.cs      # 모험 관리 (Hero 지원)
             │   ├── InventoryController.cs      # 인벤토리 관리
             │   ├── CustomerManager.cs          # 고객 생성 및 관리
-            │   ├── HeroManager.cs              # Hero 전담 관리자 (신규)
+            │   ├── HeroManager.cs              # Hero 전담 관리자 
             │   ├── WeaponShopController.cs     # 무기 상점 + 새로고침
             │   ├── BlacksmithController.cs     # 대장간 + 제작 시스템
             │   ├── DailyEventManager.cs        # 일일 이벤트
             │   ├── PersistenceController.cs    # 저장/로드 (Hero 데이터 포함)
             │   ├── SuccessRateCalculator.cs    # 성공률 계산 (Hero 보정 포함)
-            │   ├── HeroConversionCalculator.cs # Hero 전환 확률 계산 (신규)
-            │   └── RentCalculator.cs           # 월세 계산 시스템 (신규)
+            │   ├── HeroConversionCalculator.cs # Hero 전환 확률 계산 
+            │   └── RentCalculator.cs           # 월세 계산 시스템
             │
             └── Phases/                 # 각 페이즈의 UI 흐름 제어
                 ├── MorningController.cs        # 아침 페이즈 제어
@@ -208,11 +207,11 @@ Assets/
 
 ---
 
-## 4. 핵심 관리자 역할 정의 (확장)
+## 4. 핵심 관리자 역할 정의
 
 ### 4.1. 기존 핵심 관리자 확장
 
-#### GameController.cs (확장)
+#### GameController.cs
 **기존 역할**: 게임의 전체 흐름(아침→낮→밤)과 시간, 날짜 관리
 **Hero 시스템 추가 역할**:
 - **Hero 회복 처리**: 매일 부상당한 Hero들의 회복 상태 확인
@@ -221,7 +220,7 @@ Assets/
 - **월세 관리**: 납부일 확인, 경고 표시, 게임오버 처리
 - **데이터 통합 관리**: PlayerData의 Hero 관련 필드들 중앙 관리
 
-#### UIManager.cs (확장)
+#### UIManager.cs
 **기존 역할**: 모든 UI 패널과 팝업의 생성, 표시, 소멸 전담
 **Hero 시스템 추가 역할**:
 - **새로운 팝업 시스템**: AlertPopup, LoadingPopup만 사용 (ConfirmPopup 제거)
@@ -230,7 +229,7 @@ Assets/
 - **판매 UI 관리**: 무기 판매 팝업 및 Management 모드 UI
 - **월세 경고**: 납부일 하루 전 AlertPopup 표시
 
-#### DataManager.cs (확장)
+#### DataManager.cs
 **기존 역할**: 모든 정적 데이터를 Dictionary로 보관하는 데이터 사전
 **Hero 시스템 추가 역할**:
 - **Hero 도감 데이터**: 전체 Customer 데이터를 Hero 도감용으로 제공
@@ -239,17 +238,14 @@ Assets/
 
 ### 4.2. 새로운 핵심 관리자
 
-#### HeroManager.cs (신규)
+#### HeroManager.cs
 **역할**: Hero 수집, 관리, 부상 시스템을 전담하는 관리자
 **주요 책임**:
 - **Hero 수집 관리**: Customer → Hero 전환 처리 및 도감 업데이트
-- **Hero 레벨 시스템**: 성공 시 레벨업, 현재/획득 레벨 분리 관리
-- **부상 시스템**: Hero 실패 시 부상 처리, 10일 회복 관리
-- **잠금해제 관리**: 등급별 일수 제한 확인 및 UI 상태 관리
-- **가용성 확인**: 모험 가능한 Hero 목록 제공 (잠금/부상 제외)
+- **부상 시스템**: Hero 실패 시 부상(경상, 중상, 중증) 처리, 회복 관리
 - **도감 상태**: 수집 상태 관리 및 UI 동기화
 
-#### SuccessRateCalculator.cs (신규)
+#### SuccessRateCalculator.cs
 **역할**: Customer와 Hero를 구분한 성공률 계산 전문 시스템
 **주요 책임**:
 - **기본 성공률**: 고객/Hero 레벨 vs 던전 레벨 계산
@@ -257,7 +253,7 @@ Assets/
 - **등급 보정**: Customer와 Hero의 서로 다른 등급 보정 적용
 - **특수 보정**: Light/Dark 속성의 1.3배 보정
 
-#### HeroConversionCalculator.cs (신규)
+#### HeroConversionCalculator.cs
 **역할**: 모험 성공 시 Customer의 Hero 전환 확률 계산
 **주요 책임**:
 - **기본 확률**: Customer 등급별 기본 전환 확률 (5% ~ 1%)
@@ -265,7 +261,7 @@ Assets/
 - **던전 보정**: 던전 등급에 따른 보정값 (-20% ~ +100%)
 - **최종 계산**: 기본 확률 × (1 + 보정값들) 공식 적용
 
-#### RentCalculator.cs (신규)
+#### RentCalculator.cs
 **역할**: 월세 계산 및 경고 시스템 전담 관리자
 **주요 책임**:
 - **월세 계산**: 현재 일수 × 100골드 공식 적용
@@ -286,12 +282,11 @@ public int blacksmithUnlockDay = 3;          // 대장간 해금 일자
 public int weaponShopItemCount = 8;          // 무기 상점 기본 진열 개수
 ```
 
-### 5.2. Hero 시스템 추가 설정
+### 5.2. Hero 시스템 설정
 ```csharp
 [Header("Hero 시스템 설정")]
 public int heroInjuryDays = 10;              // Hero 부상 회복 기간
 public int heroMaxLevel = 100;               // Hero 최대 레벨
-public int[] heroUnlockDays = {10, 20, 30, 40, 50}; // 등급별 잠금해제 일수
 
 [Header("Hero 보상 시스템")]
 public float heroGoldMultiplier = 1.5f;      // Hero 골드 보정 배율
@@ -304,7 +299,6 @@ public int[][] heroLevelUpTables = {          // 던전별 레벨업 확률 테�
 };
 
 [Header("Hero 페널티 시스템")]
-public int heroGoldPenaltyPerDay = 50;       // 일수당 골드 페널티
 public int heroBaseInjuryDays = 5;           // 기본 부상 기간
 public int heroMinInjuryDays = 1;            // 최소 부상 기간  
 public int heroMaxInjuryDays = 15;           // 최대 부상 기간
@@ -378,7 +372,6 @@ public float[] dungeonGradeBonuses = {-20f, 0f, 20f, 50f, 100f}; // 던전 등�
 1. 모험 완료 시 (AdventureController)
    → 성공 여부 계산 (SuccessRateCalculator)
    → 성공 시: Hero 전환 확률 계산 (HeroConversionCalculator)
-   → Hero인 경우: 레벨업 처리 (HeroManager.LevelUpHero)
 
 2. Hero 전환 성공 시
    → CustomerManager.RemoveFromPool()
