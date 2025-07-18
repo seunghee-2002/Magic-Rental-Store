@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace MagicRentalShop.Data
@@ -21,6 +20,9 @@ namespace MagicRentalShop.Data
         [Header("동적 속성")]
         [Tooltip("고객의 현재 레벨")]
         public int level;
+
+        [Tooltip("대여한 무기")]
+        public WeaponInstance rentedWeapon;
         
         [Tooltip("고객에게 배정된 던전")]
         public DungeonData assignedDungeon;
@@ -41,6 +43,7 @@ namespace MagicRentalShop.Data
             instanceID = System.Guid.NewGuid().ToString();
             level = customerLevel;
             assignedDungeon = dungeon;
+            rentedWeapon = null;
         }
         
         /// <summary>
@@ -86,6 +89,14 @@ namespace MagicRentalShop.Data
         {
             return data?.customerIcon;
         }
+
+        /// <summary>
+        /// 고객 레벨 반환
+        /// </summary>
+        public int GetLevel()
+        {
+            return level <= 0 ? 1 : level;
+        }
         
         /// <summary>
         /// 고객 등급 반환
@@ -117,6 +128,14 @@ namespace MagicRentalShop.Data
         public string GetAssignedDungeonName()
         {
             return assignedDungeon?.dungeonName ?? "No Dungeon";
+        }
+
+        /// <summary>
+        /// 배정된 던전 아이콘 반환
+        /// </summary>
+        public Sprite GetAssignedDungeonIcon()
+        {
+            return assignedDungeon?.icon ?? null;
         }
         
         /// <summary>

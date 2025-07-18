@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using System.Collections.Generic;
+
 using MagicRentalShop;
 using MagicRentalShop.Data;
-using System.Collections.Generic;
 
 public class DataGenerator : EditorWindow
 {

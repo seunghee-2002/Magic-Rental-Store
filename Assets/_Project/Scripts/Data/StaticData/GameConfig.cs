@@ -1,4 +1,5 @@
 using UnityEngine;
+
 using MagicRentalShop.Utils;
 
 namespace MagicRentalShop.Data

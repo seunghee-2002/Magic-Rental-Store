@@ -1,6 +1,6 @@
-// CustomLabelsPropertyDrawer.cs
 using UnityEngine;
 using UnityEditor;
+
 using MagicRentalShop.Utils;
 
 [CustomPropertyDrawer(typeof(CustomLabelsAttribute))]

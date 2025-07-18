@@ -227,12 +227,14 @@ namespace MagicRentalShop.Systems
         {
             // PlayerData에서 Hero 목록을 가져옴
             var allHeroesOfGrade = playerData.visitingCustomers.Where(c => 
-                c.IsHero(playerData) && 
-                dataManager.GetCustomerData(c.staticDataID)?.grade == grade
+                c.IsHero() && 
+                c.data?.grade == grade
             ).ToList();
             
-            // InjuryManager를 통해 방문 가능한 Hero들만 필터링
-            return InjuryManager.Instance.FilterAvailableHeroes(allHeroesOfGrade, currentDay, playerData);
+            /// HeroManager를 통해 방문 가능한 Hero들만 필터링
+            return allHeroesOfGrade.Where(hero => 
+                HeroManager.Instance.IsHeroAvailable(hero.instanceID)
+            ).ToList();
         }
 
         /// <summary>

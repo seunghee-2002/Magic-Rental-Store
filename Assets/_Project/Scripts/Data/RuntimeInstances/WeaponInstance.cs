@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace MagicRentalShop.Data
@@ -70,6 +69,14 @@ namespace MagicRentalShop.Data
         public string GetDisplayName()
         {
             return data?.weaponName ?? "Unknown Weapon";
+        }
+
+        /// <summary>
+        /// 무기 아이콘 반환
+        /// </summary>
+        public Sprite GetIcon()
+        {
+            return data?.icon ?? null;
         }
         
         /// <summary>

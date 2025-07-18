@@ -1,6 +1,6 @@
-// ArrayElementTitleDrawer.cs
 using UnityEngine;
 using UnityEditor;
+
 using MagicRentalShop.Utils;
 
 [CustomPropertyDrawer(typeof(ArrayElementTitle))]
