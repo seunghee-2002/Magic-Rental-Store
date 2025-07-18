@@ -237,8 +237,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataContainer: {fileID: 11400000, guid: 0d3b2bf6c8b730644a5b48a89f720c7b, type: 2}
+  gameConfig: {fileID: 11400000, guid: 035eb8ecd47b13e409b3ed3f077f93fa, type: 2}
+  defaultWeaponData: {fileID: 11400000, guid: 77267e53acb16c24c8845143aef27969, type: 2}
+  defaultCustomerData: {fileID: 11400000, guid: e44b9a8676def834b86b216230d986f1, type: 2}
+  defaultDungeonData: {fileID: 11400000, guid: 4b1489a42f606a84f92b1a652ac077d8, type: 2}
+  defaultMaterialData: {fileID: 11400000, guid: 22e7ffa7e26f19042b4a390ba199e3fc, type: 2}
+  defaultRecipeData: {fileID: 11400000, guid: 8bc8af0600515824592b3c9a5372452b, type: 2}
+  defaultEventData: {fileID: 11400000, guid: cbab2e675ae93af4fac536c7e7abdf5d, type: 2}
   isInitialized: 0
   totalLoadedAssets: 0
+  errorCount: 0
 --- !u!4 &1533126175
 Transform:
   m_ObjectHideFlags: 0
@@ -422,6 +430,81 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1812989207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1812989210}
+  - component: {fileID: 1812989209}
+  - component: {fileID: 1812989208}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1812989208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812989207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53fb3ca8d70b3da43aa87a7896cd6188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1812989209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812989207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac86883eccb079441849988a026bcde6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData:
+    gold: 5000
+    currentDay: 1
+    currentPhase: 0
+    phaseRemainingTime: 0
+    unlockedRecipeIDs: []
+    purchasedWeaponIDs: []
+    lastShopRefreshDay: 0
+    ownedWeapons: []
+    ownedMaterials: []
+    visitingCustomers: []
+    injuredHeroes: []
+    ongoingAdventures: []
+    completedAdventures: []
+    ongoingCrafting: []
+    lastRentPaymentDay: 0
+    hasShownRentWarning: 0
+  gameConfig: {fileID: 11400000, guid: 035eb8ecd47b13e409b3ed3f077f93fa, type: 2}
+--- !u!4 &1812989210
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812989207}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1873063545
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,10 +535,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82e5d2ebfd7b96146be2191c09d4183f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataManager: {fileID: 1533126174}
-  gameConfig: {fileID: 11400000, guid: 035eb8ecd47b13e409b3ed3f077f93fa, type: 2}
-  visitingCustomers: []
   baseLevelMultiplier: 0.2
+  maxVisitingCustomers: 10
+  enablePerformanceOptimization: 1
+  heroSearchCacheSize: 50
 --- !u!4 &1873063548
 Transform:
   m_ObjectHideFlags: 0
@@ -480,7 +563,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1873063545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1772c0a964f6639418bc6396b8f822c8, type: 3}
+  m_Script: {fileID: 11500000, guid: b51a6c7a3710f9d4399b90d10f9e1824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  injuredHeroes: []

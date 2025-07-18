@@ -14,9 +14,22 @@ namespace MagicRentalShop.Core
     {
         [Header("데이터 컨테이너")]
         [SerializeField] private GameDataContainer dataContainer;
+
+        [Header("게임 설정")]
+        [SerializeField] private GameConfig gameConfig;
+        
+        [Header("기본 데이터 (에러 시 반환용)")]
+        [SerializeField] private WeaponData defaultWeaponData;
+        [SerializeField] private CustomerData defaultCustomerData;
+        [SerializeField] private DungeonData defaultDungeonData;
+        [SerializeField] private MaterialData defaultMaterialData;
+        [SerializeField] private RecipeData defaultRecipeData;
+        [SerializeField] private DailyEventData defaultEventData;
+        
         [Header("로드된 데이터 상태")]
         [SerializeField] private bool isInitialized = false;
         [SerializeField] private int totalLoadedAssets = 0;
+        [SerializeField] private int errorCount = 0;
         
         // 정적 데이터 Dictionary들
         private Dictionary<string, WeaponData> weaponDatas = new Dictionary<string, WeaponData>();
@@ -32,12 +45,16 @@ namespace MagicRentalShop.Core
         private Dictionary<Grade, List<DungeonData>> dungeonsByGrade = new Dictionary<Grade, List<DungeonData>>();
         private Dictionary<Grade, List<MaterialData>> materialsByGrade = new Dictionary<Grade, List<MaterialData>>();
         
+        // 에러 추적용 (디버깅용)
+        private List<string> missingDataIds = new List<string>();
+        
         // 싱글톤 패턴
         public static DataManager Instance { get; private set; }
         
         // 초기화 상태 확인용 프로퍼티
         public bool IsInitialized => isInitialized;
         public int TotalLoadedAssets => totalLoadedAssets;
+        public int ErrorCount => errorCount;
 
         private void Awake()
         {
@@ -66,6 +83,9 @@ namespace MagicRentalShop.Core
             
             Debug.Log("=== DataManager 초기화 시작 ===");
             
+            // 기본 데이터 유효성 검증
+            ValidateDefaultData();
+            
             // 각 데이터 타입별로 로드
             LoadWeaponData();
             LoadCustomerData();
@@ -81,19 +101,77 @@ namespace MagicRentalShop.Core
             
             Debug.Log($"=== DataManager 초기화 완료 ===");
             Debug.Log($"총 로드된 에셋: {totalLoadedAssets}개");
+            Debug.Log($"에러 발생 횟수: {errorCount}개");
+            
+            if (errorCount > 0)
+            {
+                Debug.LogWarning($"일부 데이터 로드 실패로 기본값 사용: {string.Join(", ", missingDataIds)}");
+            }
+            
             LogLoadedDataSummary();
         }
+
+        #region 기본 데이터 검증
+        
+        /// <summary>
+        /// 기본 데이터들이 할당되어 있는지 검증
+        /// </summary>
+        private void ValidateDefaultData()
+        {
+            if (defaultWeaponData == null)
+            {
+                Debug.LogError("[DataManager] defaultWeaponData가 설정되지 않았습니다!");
+            }
+            
+            if (defaultCustomerData == null)
+            {
+                Debug.LogError("[DataManager] defaultCustomerData가 설정되지 않았습니다!");
+            }
+            
+            if (defaultDungeonData == null)
+            {
+                Debug.LogError("[DataManager] defaultDungeonData가 설정되지 않았습니다!");
+            }
+            
+            if (defaultMaterialData == null)
+            {
+                Debug.LogError("[DataManager] defaultMaterialData가 설정되지 않았습니다!");
+            }
+            
+            if (defaultRecipeData == null)
+            {
+                Debug.LogError("[DataManager] defaultRecipeData가 설정되지 않았습니다!");
+            }
+            
+            if (defaultEventData == null)
+            {
+                Debug.LogError("[DataManager] defaultEventData가 설정되지 않았습니다!");
+            }
+        }
+        
+        #endregion
 
         #region 데이터 로드 메서드들
         
         private void LoadWeaponData()
         {
+            if (dataContainer?.weaponDatas == null)
+            {
+                Debug.LogError("WeaponData 컨테이너가 null입니다!");
+                return;
+            }
+            
             foreach (var weapon in dataContainer.weaponDatas)
             {
-                if (!string.IsNullOrEmpty(weapon.id))
+                if (weapon != null && !string.IsNullOrEmpty(weapon.id))
                 {
                     weaponDatas[weapon.id] = weapon;
                     totalLoadedAssets++;
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid WeaponData found (null or empty id)");
+                    errorCount++;
                 }
             }
             Debug.Log($"무기 데이터 로드 완료: {weaponDatas.Count}개");
@@ -101,12 +179,23 @@ namespace MagicRentalShop.Core
         
         private void LoadCustomerData()
         {
+            if (dataContainer?.customerDatas == null)
+            {
+                Debug.LogError("CustomerData 컨테이너가 null입니다!");
+                return;
+            }
+            
             foreach (var customer in dataContainer.customerDatas)
             {
-                if (!string.IsNullOrEmpty(customer.id))
+                if (customer != null && !string.IsNullOrEmpty(customer.id))
                 {
                     customerDatas[customer.id] = customer;
                     totalLoadedAssets++;
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid CustomerData found (null or empty id)");
+                    errorCount++;
                 }
             }
             Debug.Log($"고객 데이터 로드 완료: {customerDatas.Count}개");
@@ -114,12 +203,23 @@ namespace MagicRentalShop.Core
         
         private void LoadDungeonData()
         {
+            if (dataContainer?.dungeonDatas == null)
+            {
+                Debug.LogError("DungeonData 컨테이너가 null입니다!");
+                return;
+            }
+            
             foreach (var dungeon in dataContainer.dungeonDatas)
             {
-                if (!string.IsNullOrEmpty(dungeon.id))
+                if (dungeon != null && !string.IsNullOrEmpty(dungeon.id))
                 {
                     dungeonDatas[dungeon.id] = dungeon;
                     totalLoadedAssets++;
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid DungeonData found (null or empty id)");
+                    errorCount++;
                 }
             }
             Debug.Log($"던전 데이터 로드 완료: {dungeonDatas.Count}개");
@@ -127,13 +227,23 @@ namespace MagicRentalShop.Core
         
         private void LoadMaterialData()
         {
+            if (dataContainer?.materialDatas == null)
+            {
+                Debug.LogError("MaterialData 컨테이너가 null입니다!");
+                return;
+            }
             
             foreach (var material in dataContainer.materialDatas)
             {
-                if (!string.IsNullOrEmpty(material.id))
+                if (material != null && !string.IsNullOrEmpty(material.id))
                 {
                     materialDatas[material.id] = material;
                     totalLoadedAssets++;
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid MaterialData found (null or empty id)");
+                    errorCount++;
                 }
             }
             Debug.Log($"재료 데이터 로드 완료: {materialDatas.Count}개");
@@ -141,12 +251,23 @@ namespace MagicRentalShop.Core
         
         private void LoadRecipeData()
         {
+            if (dataContainer?.recipeDatas == null)
+            {
+                Debug.LogError("RecipeData 컨테이너가 null입니다!");
+                return;
+            }
+            
             foreach (var recipe in dataContainer.recipeDatas)
             {
-                if (!string.IsNullOrEmpty(recipe.id))
+                if (recipe != null && !string.IsNullOrEmpty(recipe.id))
                 {
                     recipeDatas[recipe.id] = recipe;
                     totalLoadedAssets++;
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid RecipeData found (null or empty id)");
+                    errorCount++;
                 }
             }
             Debug.Log($"레시피 데이터 로드 완료: {recipeDatas.Count}개");
@@ -154,126 +275,239 @@ namespace MagicRentalShop.Core
         
         private void LoadDailyEventData()
         {
+            if (dataContainer?.dailyEventDatas == null)
+            {
+                Debug.LogError("DailyEventData 컨테이너가 null입니다!");
+                return;
+            }
+            
             foreach (var eventData in dataContainer.dailyEventDatas)
             {
-                if (!string.IsNullOrEmpty(eventData.id))
+                if (eventData != null && !string.IsNullOrEmpty(eventData.id))
                 {
                     dailyEventDatas[eventData.id] = eventData;
                     totalLoadedAssets++;
                 }
+                else
+                {
+                    Debug.LogWarning("Invalid DailyEventData found (null or empty id)");
+                    errorCount++;
+                }
             }
-            Debug.Log($"일일 이벤트 데이터 로드 완료: {dailyEventDatas.Count}개");
+            Debug.Log($"이벤트 데이터 로드 완료: {dailyEventDatas.Count}개");
         }
-        
+
         #endregion
 
-        #region 등급별 분류 캐시 구성
-        
-        private void BuildGradeCache()
+        #region GameConfig 관리
+
+        /// <summary>
+        /// 게임 설정 데이터 반환
+        /// </summary>
+        public GameConfig GetGameConfig()
         {
-            // 무기 등급별 분류
-            foreach (Grade grade in System.Enum.GetValues(typeof(Grade)))
-            {
-                weaponsByGrade[grade] = weaponDatas.Values.Where(w => w.grade == grade).ToList();
-                customersByGrade[grade] = customerDatas.Values.Where(c => c.grade == grade).ToList();
-                dungeonsByGrade[grade] = dungeonDatas.Values.Where(d => d.grade == grade).ToList();
-                materialsByGrade[grade] = materialDatas.Values.Where(m => m.grade == grade).ToList();
+            if (gameConfig == null)
+            {                
+                Debug.LogError("GameConfig를 찾을 수 없습니다!");
             }
             
-            Debug.Log("등급별 분류 캐시 구성 완료");
+            return gameConfig;
         }
-        
+
+        /// <summary>
+        /// GameConfig 설정 (Inspector나 외부에서 설정 시 사용)
+        /// </summary>
+        public void SetGameConfig(GameConfig config)
+        {
+            gameConfig = config;
+        }
+
         #endregion
 
         #region 개별 데이터 접근 메서드
-        
+
         /// <summary>
-        /// 특정 ID의 무기 데이터 반환
+        /// 특정 ID의 무기 데이터 반환 (에러 시 기본값 반환)
         /// </summary>
         public WeaponData GetWeaponData(string id)
         {
+            // ID가 유효하지 않은 경우
+            if (string.IsNullOrEmpty(id))
+            {
+                Debug.LogWarning("GetWeaponData: ID가 null이거나 비어있습니다. 기본 무기 데이터를 반환합니다.");
+                RecordMissingData($"WeaponData:{id}");
+                return defaultWeaponData;
+            }
+
+            // 데이터를 찾은 경우
             if (weaponDatas.TryGetValue(id, out WeaponData weapon))
             {
                 return weapon;
             }
-            
-            Debug.LogError($"WeaponData not found: {id}");
-            return null;
+
+            // 데이터를 찾지 못한 경우
+            Debug.LogWarning($"WeaponData not found: {id}. 기본 무기 데이터를 반환합니다.");
+            RecordMissingData($"WeaponData:{id}");
+            return defaultWeaponData;
         }
         
         /// <summary>
-        /// 특정 ID의 고객 데이터 반환
+        /// 특정 ID의 고객 데이터 반환 (에러 시 기본값 반환)
         /// </summary>
         public CustomerData GetCustomerData(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                Debug.LogWarning("GetCustomerData: ID가 null이거나 비어있습니다. 기본 고객 데이터를 반환합니다.");
+                RecordMissingData($"CustomerData:{id}");
+                return defaultCustomerData;
+            }
+            
             if (customerDatas.TryGetValue(id, out CustomerData customer))
             {
                 return customer;
             }
             
-            Debug.LogError($"CustomerData not found: {id}");
-            return null;
+            Debug.LogWarning($"CustomerData not found: {id}. 기본 고객 데이터를 반환합니다.");
+            RecordMissingData($"CustomerData:{id}");
+            return defaultCustomerData;
         }
         
         /// <summary>
-        /// 특정 ID의 던전 데이터 반환
+        /// 특정 ID의 던전 데이터 반환 (에러 시 기본값 반환)
         /// </summary>
         public DungeonData GetDungeonData(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                Debug.LogWarning("GetDungeonData: ID가 null이거나 비어있습니다. 기본 던전 데이터를 반환합니다.");
+                RecordMissingData($"DungeonData:{id}");
+                return defaultDungeonData;
+            }
+            
             if (dungeonDatas.TryGetValue(id, out DungeonData dungeon))
             {
                 return dungeon;
             }
             
-            Debug.LogError($"DungeonData not found: {id}");
-            return null;
+            Debug.LogWarning($"DungeonData not found: {id}. 기본 던전 데이터를 반환합니다.");
+            RecordMissingData($"DungeonData:{id}");
+            return defaultDungeonData;
         }
         
         /// <summary>
-        /// 특정 ID의 재료 데이터 반환
+        /// 특정 ID의 재료 데이터 반환 (에러 시 기본값 반환)
         /// </summary>
         public MaterialData GetMaterialData(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                Debug.LogWarning("GetMaterialData: ID가 null이거나 비어있습니다. 기본 재료 데이터를 반환합니다.");
+                RecordMissingData($"MaterialData:{id}");
+                return defaultMaterialData;
+            }
+            
             if (materialDatas.TryGetValue(id, out MaterialData material))
             {
                 return material;
             }
             
-            Debug.LogError($"MaterialData not found: {id}");
-            return null;
+            Debug.LogWarning($"MaterialData not found: {id}. 기본 재료 데이터를 반환합니다.");
+            RecordMissingData($"MaterialData:{id}");
+            return defaultMaterialData;
         }
         
         /// <summary>
-        /// 특정 ID의 레시피 데이터 반환
+        /// 특정 ID의 레시피 데이터 반환 (에러 시 기본값 반환)
         /// </summary>
         public RecipeData GetRecipeData(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                Debug.LogWarning("GetRecipeData: ID가 null이거나 비어있습니다. 기본 레시피 데이터를 반환합니다.");
+                RecordMissingData($"RecipeData:{id}");
+                return defaultRecipeData;
+            }
+            
             if (recipeDatas.TryGetValue(id, out RecipeData recipe))
             {
                 return recipe;
             }
             
-            Debug.LogError($"RecipeData not found: {id}");
-            return null;
+            Debug.LogWarning($"RecipeData not found: {id}. 기본 레시피 데이터를 반환합니다.");
+            RecordMissingData($"RecipeData:{id}");
+            return defaultRecipeData;
         }
         
         /// <summary>
-        /// 특정 ID의 일일 이벤트 데이터 반환
+        /// 특정 ID의 일일 이벤트 데이터 반환 (에러 시 기본값 반환)
         /// </summary>
         public DailyEventData GetDailyEventData(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                Debug.LogWarning("GetDailyEventData: ID가 null이거나 비어있습니다. 기본 이벤트 데이터를 반환합니다.");
+                RecordMissingData($"DailyEventData:{id}");
+                return defaultEventData;
+            }
+            
             if (dailyEventDatas.TryGetValue(id, out DailyEventData eventData))
             {
                 return eventData;
             }
             
-            Debug.LogError($"DailyEventData not found: {id}");
-            return null;
+            Debug.LogWarning($"DailyEventData not found: {id}. 기본 이벤트 데이터를 반환합니다.");
+            RecordMissingData($"DailyEventData:{id}");
+            return defaultEventData;
         }
         
         #endregion
 
-        #region 전체 데이터 접근 메서드
+        #region 에러 추적 및 디버깅
+        
+        /// <summary>
+        /// 누락된 데이터 기록 (중복 제거)
+        /// </summary>
+        private void RecordMissingData(string dataId)
+        {
+            if (!missingDataIds.Contains(dataId))
+            {
+                missingDataIds.Add(dataId);
+                errorCount++;
+            }
+        }
+        
+        /// <summary>
+        /// 누락된 데이터 목록 반환 (디버깅용)
+        /// </summary>
+        public List<string> GetMissingDataIds()
+        {
+            return new List<string>(missingDataIds);
+        }
+        
+        /// <summary>
+        /// 에러 통계 출력 (디버깅용)
+        /// </summary>
+        [ContextMenu("Debug Error Stats")]
+        public void DebugErrorStats()
+        {
+            Debug.Log($"=== DataManager 에러 통계 ===");
+            Debug.Log($"총 에러 횟수: {errorCount}");
+            Debug.Log($"누락된 데이터 종류: {missingDataIds.Count}");
+            
+            if (missingDataIds.Count > 0)
+            {
+                Debug.Log("누락된 데이터 목록:");
+                foreach (var id in missingDataIds)
+                {
+                    Debug.Log($"  - {id}");
+                }
+            }
+        }
+        
+        #endregion
+
+        #region 전체 데이터 접근 메서드 
         
         /// <summary>
         /// 모든 고객 데이터 반환
@@ -317,15 +551,21 @@ namespace MagicRentalShop.Core
         
         #endregion
 
-        #region 등급별 데이터 접근 메서드
+        #region 등급별 데이터 접근 메서드 (안전성 개선)
         
         /// <summary>
         /// 특정 등급의 무기들 반환
         /// </summary>
         public List<WeaponData> GetWeaponsByGrade(Grade grade)
         {
-            return weaponsByGrade.TryGetValue(grade, out List<WeaponData> weapons) ? 
-                   new List<WeaponData>(weapons) : new List<WeaponData>();
+            if (weaponsByGrade.TryGetValue(grade, out List<WeaponData> weapons))
+            {
+                return new List<WeaponData>(weapons);
+            }
+            
+            // 해당 등급이 없으면 빈 리스트 반환 (기본 무기 리스트 반환하지 않음)
+            Debug.LogWarning($"해당 등급의 무기가 없습니다: {grade}");
+            return new List<WeaponData>();
         }
         
         /// <summary>
@@ -333,8 +573,13 @@ namespace MagicRentalShop.Core
         /// </summary>
         public List<CustomerData> GetCustomersByGrade(Grade grade)
         {
-            return customersByGrade.TryGetValue(grade, out List<CustomerData> customers) ? 
-                   new List<CustomerData>(customers) : new List<CustomerData>();
+            if (customersByGrade.TryGetValue(grade, out List<CustomerData> customers))
+            {
+                return new List<CustomerData>(customers);
+            }
+            
+            Debug.LogWarning($"해당 등급의 고객이 없습니다: {grade}");
+            return new List<CustomerData>();
         }
         
         /// <summary>
@@ -342,8 +587,13 @@ namespace MagicRentalShop.Core
         /// </summary>
         public List<DungeonData> GetDungeonsByGrade(Grade grade)
         {
-            return dungeonsByGrade.TryGetValue(grade, out List<DungeonData> dungeons) ? 
-                   new List<DungeonData>(dungeons) : new List<DungeonData>();
+            if (dungeonsByGrade.TryGetValue(grade, out List<DungeonData> dungeons))
+            {
+                return new List<DungeonData>(dungeons);
+            }
+            
+            Debug.LogWarning($"해당 등급의 던전이 없습니다: {grade}");
+            return new List<DungeonData>();
         }
         
         /// <summary>
@@ -351,144 +601,46 @@ namespace MagicRentalShop.Core
         /// </summary>
         public List<MaterialData> GetMaterialsByGrade(Grade grade)
         {
-            return materialsByGrade.TryGetValue(grade, out List<MaterialData> materials) ? 
-                   new List<MaterialData>(materials) : new List<MaterialData>();
+            if (materialsByGrade.TryGetValue(grade, out List<MaterialData> materials))
+            {
+                return new List<MaterialData>(materials);
+            }
+            
+            Debug.LogWarning($"해당 등급의 재료가 없습니다: {grade}");
+            return new List<MaterialData>();
         }
         
         #endregion
 
-        #region 재료-던전 연결 정보 (MaterialData 확장 지원)
+        #region 등급별 캐시 구성 (기존 유지)
         
-        /// <summary>
-        /// 특정 재료를 획득할 수 있는 던전 목록 반환
-        /// </summary>
-        public List<DungeonData> GetDungeonsForMaterial(string materialId)
+        private void BuildGradeCache()
         {
-            var material = GetMaterialData(materialId);
-            if (material == null || material.availableDungeonIDs == null)
-            {
-                return new List<DungeonData>();
-            }
-            
-            var dungeons = new List<DungeonData>();
-            foreach (string dungeonId in material.availableDungeonIDs)
-            {
-                var dungeon = GetDungeonData(dungeonId);
-                if (dungeon != null)
-                {
-                    dungeons.Add(dungeon);
-                }
-            }
-            
-            return dungeons;
-        }
-        
-        /// <summary>
-        /// 특정 던전에서 획득 가능한 재료 목록 반환
-        /// </summary>
-        public List<MaterialData> GetMaterialsFromDungeon(string dungeonId)
-        {
-            return materialDatas.Values
-                .Where(m => m.availableDungeonIDs != null && m.availableDungeonIDs.Contains(dungeonId))
-                .ToList();
-        }
-        
-        #endregion
-
-        #region 유틸리티 및 디버그 메서드
-        
-        /// <summary>
-        /// 데이터 유효성 검사
-        /// </summary>
-        public bool ValidateData()
-        {
-            bool isValid = true;
-            
-            // 기본 데이터 존재 여부 확인
-            if (weaponDatas.Count == 0)
-            {
-                Debug.LogError("No weapon data loaded!");
-                isValid = false;
-            }
-            
-            if (customerDatas.Count == 0)
-            {
-                Debug.LogError("No customer data loaded!");
-                isValid = false;
-            }
-            
-            if (dungeonDatas.Count == 0)
-            {
-                Debug.LogError("No dungeon data loaded!");
-                isValid = false;
-            }
-            
-            // 재료-던전 연결 유효성 확인
-            foreach (var material in materialDatas.Values)
-            {
-                if (material.availableDungeonIDs != null)
-                {
-                    foreach (string dungeonId in material.availableDungeonIDs)
-                    {
-                        if (!dungeonDatas.ContainsKey(dungeonId))
-                        {
-                            Debug.LogError($"Material {material.id} references non-existent dungeon: {dungeonId}");
-                            isValid = false;
-                        }
-                    }
-                }
-            }
-            
-            return isValid;
-        }
-        
-        /// <summary>
-        /// 로드된 데이터 요약 로그 출력
-        /// </summary>
-        private void LogLoadedDataSummary()
-        {
-            Debug.Log("=== 데이터 로드 요약 ===");
-            Debug.Log($"무기: {weaponDatas.Count}개");
-            Debug.Log($"고객: {customerDatas.Count}개");
-            Debug.Log($"던전: {dungeonDatas.Count}개");
-            Debug.Log($"재료: {materialDatas.Count}개");
-            Debug.Log($"레시피: {recipeDatas.Count}개");
-            Debug.Log($"일일이벤트: {dailyEventDatas.Count}개");
-            
-            // 등급별 분포 출력
+            // 등급별 무기 분류
             foreach (Grade grade in System.Enum.GetValues(typeof(Grade)))
             {
-                Debug.Log($"{grade} 등급 - 무기:{weaponsByGrade[grade].Count}, " +
-                         $"고객:{customersByGrade[grade].Count}, " +
-                         $"던전:{dungeonsByGrade[grade].Count}, " +
-                         $"재료:{materialsByGrade[grade].Count}");
+                weaponsByGrade[grade] = weaponDatas.Values.Where(w => w.grade == grade).ToList();
+                customersByGrade[grade] = customerDatas.Values.Where(c => c.grade == grade).ToList();
+                dungeonsByGrade[grade] = dungeonDatas.Values.Where(d => d.grade == grade).ToList();
+                materialsByGrade[grade] = materialDatas.Values.Where(m => m.grade == grade).ToList();
             }
+            
+            Debug.Log("등급별 분류 캐시 구성 완료");
         }
         
-        /// <summary>
-        /// 런타임에서 데이터 재로드 (개발용)
-        /// </summary>
-        [ContextMenu("Reload All Data")]
-        public void ReloadData()
+        #endregion
+
+        #region 로그 출력 메서드
+        
+        private void LogLoadedDataSummary()
         {
-            // 기존 데이터 클리어
-            weaponDatas.Clear();
-            customerDatas.Clear();
-            dungeonDatas.Clear();
-            materialDatas.Clear();
-            recipeDatas.Clear();
-            dailyEventDatas.Clear();
-            
-            weaponsByGrade.Clear();
-            customersByGrade.Clear();
-            dungeonsByGrade.Clear();
-            materialsByGrade.Clear();
-            
-            totalLoadedAssets = 0;
-            isInitialized = false;
-            
-            // 재초기화
-            Init();
+            Debug.Log($"로드된 데이터 요약:\n" +
+                     $"- 무기: {weaponDatas.Count}개\n" +
+                     $"- 고객: {customerDatas.Count}개\n" +
+                     $"- 던전: {dungeonDatas.Count}개\n" +
+                     $"- 재료: {materialDatas.Count}개\n" +
+                     $"- 레시피: {recipeDatas.Count}개\n" +
+                     $"- 이벤트: {dailyEventDatas.Count}개");
         }
         
         #endregion

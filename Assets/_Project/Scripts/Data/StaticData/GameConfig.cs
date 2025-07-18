@@ -10,14 +10,17 @@ namespace MagicRentalShop.Data
         [Header("기본 게임 설정")]
         [Tooltip("게임 시작 시 초기 자본금")]
         public int startingGold = 5000;
+
         [Tooltip("아침/낮 페이즈 지속 시간(초)")]
         public float dayDuration = 300f;
+
         [Tooltip("대장간 해금 일자")]
         public int blacksmithUnlockDay = 3;
 
         [Header("상점 시스템")]
         [Tooltip("무기 상점 기본 진열 개수")]
         public int weaponShopItemCount = 5;
+
         [Tooltip("무기 상점 새로고침 비용")]
         public int weaponShopRefreshCost = 1000;
 
@@ -45,17 +48,25 @@ namespace MagicRentalShop.Data
         [Header("Hero 시스템 설정")]
         [Tooltip("Hero 부상 회복 기간 (일)")]
         public int heroInjuryDays = 10;
-        [Tooltip("Hero 최대 레벨")]
-        public int heroMaxLevel = 100;
+
         [Tooltip("Hero 최대 보유 개수")]
         public int maxHeroCount = 50;
+
         [Tooltip("등급별 잠금 해제 일수")]
         [GradeLabels]
         public int[] heroUnlockDays = {10, 20, 30, 40, 50};
 
+        [Tooltip("상점 Hero 등장 확률")]
+        [Range(0f, 1f)]
+        public float heroVisitChance = 0.1f;
+
+        [Tooltip("Hero 레벨업 보너스")]
+        public int heroLevelBonus = 5;
+
         [Header("Hero 보상 시스템")]
         [Tooltip("Hero 골드 보정 배율")]
         public float heroGoldMultiplier = 1.5f;
+
         [Tooltip("던전별 Hero 레벨업 테이블")]
         [GradeLabels]
         public HeroLevelUpTable[] HeroLevelUpTables = new HeroLevelUpTable[]
