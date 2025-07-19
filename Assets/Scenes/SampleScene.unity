@@ -123,6 +123,112 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &276910750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 276910752}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &276910752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276910750}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &426614591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 426614593}
+  - component: {fileID: 426614594}
+  m_Layer: 0
+  m_Name: SuccessRateTestor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &426614593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426614591}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &426614594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426614591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1508ef032f241a41a36db866f9d70b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDetailedLogs: 1
+  runPerformanceTests: 0
+  performanceTestIterations: 1000
+  testBasicRates: 1
+  testElementAdvantage: 1
+  testGradeBonus: 1
+  testHeroBonus: 1
+  testEdgeCases: 1
+  testScenarios: 1
+  quickAdvLevel: 14
+  quickAdvElement: 1
+  quickAdvGrade: 0
+  quickWeaponElement: 1
+  quickWeaponGrade: 0
+  quickDungeonLevel: 10
+  quickDungeonElement: 6
+  quickDungeonGrade: 0
+  quickIsHero: 0
+  lastCalculatedRate: 0
+  autoCalculateOnChange: 1
+  showTestButtons: 1
+  customAdventurerLevel: 10
+  customAdventurerElement: 1
+  customAdventurerGrade: 0
+  customWeaponElement: 1
+  customWeaponGrade: 0
+  customDungeonLevel: 10
+  customDungeonElement: 6
+  customDungeonGrade: 0
+  customIsHero: 0
+  showDetailedBreakdown: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

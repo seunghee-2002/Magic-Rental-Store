@@ -100,15 +100,15 @@ namespace MagicRentalShop.Data
         public float[] heroBaseConversionRates = {5f, 4f, 3f, 2f, 1f};
 
         [Header("등급 보정 확률")]
-        [Tooltip("무기 등급 보정")]
-        [GradeLabels]
-        [Range(-50f, 200f)]
-        public float[] weaponGradeBonuses = {-30f, 0f, 20f, 50f, 100f};
-
         [Tooltip("던전 등급 보정")]
-        [GradeLabels]
-        [Range(-50f, 200f)]
-        public float[] dungeonGradeBonuses = {-20f, 0f, 20f, 50f, 100f};
+        [CustomLabels("-4,-3,-2,-1,0,+1,+2,+3,+4")]
+        [Range(0f, 10f)]
+        public float[] adventurerGradeBonuses = {0.25f, 0.4f, 0.6f, 0.8f, 1f, 1.5f, 2f, 3f, 5f};
+
+        [Tooltip("무기 등급 보정")]
+        [CustomLabels("-4,-3,-2,-1,0,+1,+2,+3,+4")]
+        [Range(0, 10f)]
+        public float[] weaponGradeBonuses = {0.3f, 0.5f, 0.65f, 0.85f, 1f, 1.3f, 1.8f, 2.5f, 4f};
 
         [Header("경제 시스템 설정")]
         [Tooltip("월세 납부 주기 (일)")]
